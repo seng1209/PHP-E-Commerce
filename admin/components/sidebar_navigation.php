@@ -13,14 +13,6 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="./index.php?p=category" aria-expanded="false">
-                <span>
-                    <i class="ti ti-package"></i>
-                </span>
-                <span class="hide-menu">Category</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
             <a class="sidebar-link" href="./index.php?p=brand" aria-expanded="false">
                 <span>
                     <i class="ti ti-clipboard"></i>
@@ -29,11 +21,43 @@
             </a>
         </li>
         <li class="sidebar-item">
+            <a class="sidebar-link" href="./index.php?p=category" aria-expanded="false">
+                <span>
+                    <i class="ti ti-package"></i>
+                </span>
+                <span class="hide-menu">Category</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
             <a class="sidebar-link" href="./index.php?p=product" aria-expanded="false">
                 <span>
                     <i class="ti ti-package"></i>
                 </span>
                 <span class="hide-menu">Product</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="./index.php?p=shipment-method" aria-expanded="false">
+                <span>
+                    <i class="ti ti-clipboard"></i>
+                </span>
+                <span class="hide-menu">Shipment Method</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="./index.php?p=payment-method" aria-expanded="false">
+                <span>
+                    <i class="ti ti-clipboard"></i>
+                </span>
+                <span class="hide-menu">Payment Method</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="./index.php?p=user" aria-expanded="false">
+                <span>
+                    <i class="ti ti-clipboard"></i>
+                </span>
+                <span class="hide-menu">User</span>
             </a>
         </li>
         <li class="nav-small-cap">
@@ -49,7 +73,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+            <a class="sidebar-link" href="./register.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-user-plus"></i>
                 </span>

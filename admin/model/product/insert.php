@@ -1,9 +1,6 @@
 <?php
-    $image = $product_name = $price = $category_id = $category = $brand_id = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
-    $in_stock = true;
-
-    $sqlCategory = "SELECT * FROM categories";
-    $sqlBrand = "SELECT * FROM brands";
+global $productObj, $categoryObj, $brandObj;
+$image = $product_name = $price = $category_id = $category = $brand_id = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = $in_stock = "";
 
     if(isset($_POST['submit'])){
         $product_name = $_POST['product_name'];
@@ -13,6 +10,7 @@
         if(isset($_POST['brand']))
             $brand_id = $_POST['brand'];
         $description = $_POST['description'];
+        $in_stock = $_POST['in_stock'];
         $file_name = $_FILES['image']['name'];
 
         if(!Validator::notEmpty($product_name)){
@@ -55,8 +53,7 @@
         }
 
         try{
-            $sql =  "INSERT INTO products(image, product_name, price, category_id, brand_id, description, in_stock) VALUES ('$name', '$product_name', '$price', '$category_id', '$brand_id', '$description', '$in_stock')";
-            if(!$conn->query($sql)){
+            if(!$productObj->create($name, $product_name, $price, $category_id, $brand_id, $description, $in_stock)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {
@@ -92,34 +89,33 @@
                         <select class="form-select mb-3" name="category" aria-label="Default select example">
                             <option selected disabled>Category</option>
                             <?php
-                                $result = $conn->query($sqlCategory);
-                                if($result->num_rows > 0)
-                                {
-                                    while($row = $result->fetch_assoc()){
+                                $categories = $categoryObj->readAll();
+                                foreach($categories as $row){
                             ?>
                             <option value=" <?=$row['category_id']?>"><?=$row['category']?></option>
                             <?php
-                                    }
                                 }
                             ?>
                         </select>
                         <select class="form-select mb-3" name="brand" aria-label="Default select example">
                             <option selected disabled>Brand</option>
                             <?php
-                                $result = $conn->query($sqlBrand);
-                                if($result->num_rows > 0)
-                                {
-                                    while($row = $result->fetch_assoc()){
+                                $brands = $brandObj->readAll();
+                                foreach($brands as $row){
                             ?>
                             <option value=" <?=$row['brand_id']?>"><?=$row['brand']?></option>
                             <?php
-                                    }
                                 }
                             ?>
                         </select>
                         <div class="mb-3">
                             <label for="#" class="form-label">Description</label>
                             <textarea class="form-control" name="description" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="#" class="form-label">In Stock Quantity</label>
+                            <input type="text" name="in_stock" class="form-control" placeholder="Quantity"
+                                require>
                         </div>
                         <input type="submit" name="submit" class="btn btn-primary" />
                     </form>

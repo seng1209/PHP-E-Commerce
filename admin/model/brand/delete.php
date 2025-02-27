@@ -1,10 +1,10 @@
 <?php
-    
-    include "../database.php";
+    require "../../lib/Database.php";
+    require "../../lib/BrandDB.php";
     $id = $_GET['id'];
-    $sql = "DELETE FROM brands WHERE brand_id = $id";
+    $brandObj = new Brand();
     try{
-        if($conn->query($sql) === TRUE)
+        if($brandObj->delete($id) === TRUE)
             header("Location:../../index.php?p=brand");
         else
             die("Cannot delete this brand.");

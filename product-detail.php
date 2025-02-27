@@ -1,11 +1,11 @@
 <?php
-    require "./admin/model/database.php";
+
+    $productObj = new Product();
     $id = $_GET['id'];
     $product_id = $image = $product_name = $price = $description = "";
-    $sql = "SELECT * FROM products WHERE product_id = $id";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        $row = $result->fetch_assoc();
+
+    $row = $productObj->read($id);
+    if($row){
         $image = $row['image'];
         $product_name = $row['product_name'];
         $price = $row['price'];
@@ -133,7 +133,7 @@ const qty = 1;
 
                                 <button
                                     class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
-                                    onclick="addToCart(productId, image, productName, price, qty)">
+                                    onclick="addToCart(productId, image, productName, price, qty)" id="addToCart">
                                     Add to cart
                                 </button>
                             </div>
@@ -364,16 +364,13 @@ const qty = 1;
             <div class="slick2">
 
                 <?php
-                    require "./admin/model/database.php";
-                    $sql = "SELECT * FROM products AS p WHERE p.category_id = $category_id";
-                    $result = $conn->query($sql);
-                    if($result->num_rows > 0){
-                        while($row = $result->fetch_assoc()){
-                            $image = $row['image'];
-                            $product_name = $row['product_name'];
-                            $price = $row['price'];
-                            $category_id = $row['category_id'];
-                            $description = $row['description'];
+                $rows = $productObj->readByCategory($category_id);
+                foreach ($rows as $row) {
+                    $image = $row['image'];
+                    $product_name = $row['product_name'];
+                    $price = $row['price'];
+                    $category_id = $row['category_id'];
+                    $description = $row['description'];
                 ?>
                 <div class=" item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
                     <!-- Block2 -->
@@ -409,7 +406,6 @@ const qty = 1;
                     </div>
                 </div>
                 <?php
-                        }
                     }
                 ?>
             </div>

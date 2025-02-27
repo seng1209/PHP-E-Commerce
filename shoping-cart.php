@@ -1,3 +1,12 @@
+<?php
+    require "./admin/lib/ShipmentMethodDB.php";
+    $shipmentMethodObj = new ShipmentMethodDB();
+    $shippingObj = new Shipping();
+    $shipping_id = $image = $shipping_name = $price = $sub_total = $total_price = "";
+
+    $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Kandal", "Sihanoukville", "Oddar Meanchey", "Pursat", "Kampong Thom", "Kampong Speu", "Svay Rieng", "Takéo", "Kampong Chhnang", "Kampong Cham", "Prey Veng", "Tboung Khmum", "Kampot", "Ratanakiri", "Koh Kong", "Preah Vihear", "Mondulkiri", "Kep");
+?>
+
 <div class="container">
     <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
         <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
@@ -23,73 +32,17 @@
                                 <th class="column-4">Quantity</th>
                                 <th class="column-5">Total</th>
                             </tr>
-
-                            <!-- <tr class="table_row">
-                                <td class="column-1">
-                                    <div class="how-itemcart1">
-                                        <img src="images/item-cart-04.jpg" alt="IMG" />
-                                    </div>
-                                </td>
-                                <td class="column-2">Fresh Strawberries</td>
-                                <td class="column-3">$ 36.00</td>
-                                <td class="column-4">
-                                    <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-minus"></i>
-                                        </div>
-
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                            name="num-product1" value="1" />
-
-                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-plus"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="column-5">$ 36.00</td>
-                            </tr>
-
-                            <tr class="table_row">
-                                <td class="column-1">
-                                    <div class="how-itemcart1">
-                                        <img src="images/item-cart-05.jpg" alt="IMG" />
-                                    </div>
-                                </td>
-                                <td class="column-2">Lightweight Jacket</td>
-                                <td class="column-3">$ 16.00</td>
-                                <td class="column-4">
-                                    <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-minus"></i>
-                                        </div>
-
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                            name="num-product2" value="1" />
-
-                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-plus"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="column-5">$ 16.00</td>
-                            </tr> -->
                         </table>
                     </div>
 
                     <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                         <div class="flex-w flex-m m-r-20 m-tb-5">
-                            <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-                                name="coupon" placeholder="Coupon Code" />
 
-                            <div
-                                class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                                Apply coupon
-                            </div>
                         </div>
 
                         <div
-                            class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                            Update Cart
+                            class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10" onclick="btnRemoveAllItems()">
+                            Remove All
                         </div>
                     </div>
                 </div>
@@ -115,42 +68,85 @@
                         </div>
 
                         <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
-                            <p class="stext-111 cl6 p-t-2">
-                                There are no shipping methods available. Please double check
-                                your address, or contact us if you need any help.
-                            </p>
-
                             <div class="p-t-15">
                                 <span class="stext-112 cl8"> Calculate Shipping </span>
-
                                 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
                                     <select class="js-select2" name="time">
-                                        <option>Select a country...</option>
-                                        <option>USA</option>
-                                        <option>UK</option>
+                                        <option selected disabled>Select a city....</option>
+                                        <?php
+
+                                        foreach ($cities as $city) {
+
+
+                                        ?>
+                                            <option value="<?=$city?>"><?=$city?></option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                     <div class="dropDownSelect2"></div>
                                 </div>
-
                                 <div class="bor8 bg0 m-b-12">
                                     <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state"
-                                        placeholder="State /  country" />
+                                        placeholder="Khan" />
                                 </div>
 
                                 <div class="bor8 bg0 m-b-22">
                                     <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode"
-                                        placeholder="Postcode / Zip" />
+                                        placeholder="Sangkat" />
+                                </div>
+                                <div class="bor8 bg0 m-b-22">
+                                    <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode"
+                                           placeholder="Village" />
                                 </div>
 
-                                <div class="flex-w">
-                                    <div
-                                        class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                                        Update Totals
-                                    </div>
+                                <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+                                    <select class="js-select2" name="time" id="shipping-method">
+                                        <option selected disabled>Shipping Methods...</option>
+                                        <?php
+                                            $shipment_methods = $shipmentMethodObj->readAll();
+                                            foreach($shipment_methods as $s){
+                                                $shipment_method_id = $s['$shipment_method_id'];
+                                                $shipping_name = $s['name'];
+                                                $price = $s['price'];
+                                        ?>
+                                            <option value="<?=$shipment_method_id?>"><?=$shipping_name?>-$<?=$price?></option>
+                                        <?php
+                                            }
+                                        ?>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                        <div class="size-208 w-full-ssm">
+                            <span class="stext-110 cl2"> Payment: </span>
+                        </div>
+
+                        <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
+                            <div class="p-t-15">
+                                <span class="stext-112 cl8"> Calculate Payment </span>
+                                <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+                                    <select class="js-select2" name="time">
+                                        <option selected disabled>Select a city....</option>
+                                        <?php
+                                        foreach ($cities as $city) {
+                                            ?>
+                                            <option value="<?=$city?>"><?=$city?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <div class="flex-w flex-t p-t-27 p-b-33">
                         <div class="size-208">
@@ -158,7 +154,7 @@
                         </div>
 
                         <div class="size-209 p-t-1">
-                            <span class="mtext-110 cl2"> $79.65 </span>
+                            <span class="mtext-110 cl2 total-amount">  </span>
                         </div>
                     </div>
 
@@ -175,7 +171,6 @@
         const cartListTables = document.getElementsByClassName('table-shopping-cart');
         
         cartListTables.innerHTML = '';
-        let subTotal = 0;
         if (cartListTables.length > 0) {
             const cartListTable = cartListTables[0]; // Select the first element in the collection
 
@@ -239,7 +234,7 @@
 
                 // column-5
                 const tableData5 = document.createElement('td');
-                tableData5.classList.add('column-5');
+                tableData5.classList.add('column-4');
                 tableData5.textContent = `\$${(item.qty * item.price).toFixed(2)}`;
 
                 down.onclick = () => {
@@ -264,12 +259,26 @@
                     }
                 }
 
+                // remove cloumn
+                const tableRemove = document.createElement('td');
+                tableRemove.classList.add('column-5')
+                const removeIcon = document.createElement('i');
+                removeIcon.classList.add('zmdi', 'zmdi-close', 'remove-item-icon');
+                tableRemove.appendChild(removeIcon);
+
+                removeIcon.onclick = () => {
+                    cart = cart.filter(product => product.productId !== item.productId);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCart();
+                }
+
                 // add td to tr
                 listTable.appendChild(tableData1);
                 listTable.appendChild(tableData2);
                 listTable.appendChild(tableData3);
                 listTable.appendChild(tableData4);
                 listTable.appendChild(tableData5);
+                listTable.appendChild(tableRemove);
                 // Append the row to the table
                 cartListTable.appendChild(listTable);
             });
@@ -279,4 +288,29 @@
         
     }
     updateCartTable();
+    const btnRemove = document.querySelector('.remove-item-icon');
+    btnRemove.addEventListener('click', () => {
+        window.location.reload();
+    })
+
+    const btnRemoveAllItems = () =>{
+        removeAllItems();
+        window.location.reload();
+    }
+
+    document.getElementById('shipping-method').onchange = function() {
+        const selectedValue = this.value;
+        const selectedText = this.options[this.selectedIndex].text;
+        // console.log('Selected Shipping Method ID:', selectedValue);
+        // console.log('Selected Shipping Method Name:', selectedText);
+        const arr = selectedText.split("-");
+        // console.log('Shipping Name:', arr[0]);
+        // console.log('Shipping Price:', arr[1]);
+
+        const subtotal = document.querySelector('.sub-total');
+        // console.log("Sub total:", subtotal.textContent);
+        const total_price = parseFloat(subtotal.textContent.replace(/[$,]/g, '')) + parseFloat(arr[1].replace(/[$,]/g, '')) + "";
+        document.querySelector('.total-amount').innerHTML = "$" + total_price;
+    };
+
 </script>

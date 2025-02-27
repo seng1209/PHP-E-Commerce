@@ -1,3 +1,6 @@
+<?php
+    global $categoryObj;
+?>
 <table class="table">
     <thead>
         <tr style="text-align: center;">
@@ -10,10 +13,10 @@
     </thead>
     <tbody>
         <?php
-            $select = "SELECT * FROM categories";
-            $result = $conn->query($select);
-            if($result->num_rows >0){
-                while($row = $result->fetch_assoc()){
+            $categories = $categoryObj->readAll();
+            foreach($categories as $row){
+
+            
         ?>
         <tr>
             <th scope="row"><?=$row['category_id']?></th>
@@ -26,7 +29,6 @@
             </td>
         </tr>
         <?php
-                }
             }
         ?>
     </tbody>

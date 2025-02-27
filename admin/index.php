@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php 
-    require "./model/database.php";
+<?php
     require "./model/uuid.php";
     require "./model/Validator.php";
     include "./components/head.php";
+    require "./lib/Database.php";
     $pages = "dashboard.php";
     $p = "dashboard";
     if(isset($_GET['p'])){
@@ -25,6 +25,22 @@
             }
             case "product": {
                 $pages = "product.php";
+                break;
+            }
+            case "shipment-method": {
+                $pages = "shipment_method.php";
+                break;
+            }
+            case "payment-method": {
+                $pages = "payment_method.php";
+                break;
+            }
+            case "user": {
+                $pages = "user.php";
+                break;
+            }
+            case "shipping": {
+                $pages = "shipping.php";
                 break;
             }
         }

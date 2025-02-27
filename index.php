@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php 
+    require "./admin/lib/Database.php";
+    require "./admin/lib/ProductDB.php";
+    require  "./admin/lib/ShippingDB.php";
     include "./components/head.php";
     $pages = "home.php";
     $p = "home";

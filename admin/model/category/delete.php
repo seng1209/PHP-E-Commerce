@@ -1,10 +1,10 @@
 <?php
-    
-    include "../database.php";
+    require "../../lib/Database.php";
+    require "../../lib/CategoryDB.php";
     $id = $_GET['id'];
-    $sql = "DELETE FROM categories WHERE category_id = $id";
+    $categoryObj = new Category();
     try{
-        if($conn->query($sql) === TRUE)
+        if($categoryObj->delete($id) === TRUE)
             header("Location:../../index.php?p=category");
         else
             die("Cannot delete this category.");

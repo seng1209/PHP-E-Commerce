@@ -1,5 +1,6 @@
 <?php
-    $image = $category = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
+global $categoryObj;
+$image = $category = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
     if(isset($_POST['submit'])){
         $category = $_POST['category'];
@@ -34,9 +35,7 @@
         }
 
         try{
-            $sql = "INSERT INTO categories(image, category, description) 
-            VALUES ('$name', '$category', '$description')";
-            if(!$conn->query($sql)){
+            if(!$categoryObj->create($name, $category, $description)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {
@@ -48,6 +47,7 @@
         
     }
 ?>
+
 <div class="container-fluid">
     <div class="card">
         <div class="card-body">

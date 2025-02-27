@@ -1,3 +1,4 @@
+
 <table class="table">
     <thead>
         <tr style="text-align: center;">
@@ -14,10 +15,9 @@
     </thead>
     <tbody>
         <?php
-            $sql = "SELECT * FROM products";
-            $result = $conn->query($sql);
-            if($result->num_rows >0){
-                while($row = $result->fetch_assoc()){
+            global $productObj;
+            $products = $productObj->readAll();
+            foreach($products as $row){
         ?>
         <tr>
             <th scope="row"><?=$row['product_id']?></th>
@@ -35,7 +35,6 @@
             </td>
         </tr>
         <?php
-                }
             }
         ?>
     </tbody>

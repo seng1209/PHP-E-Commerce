@@ -283,21 +283,17 @@ const addToCart = (productId, image, name, price, qty) => {
         cart.push(product);
         localStorage.setItem('cart', JSON.stringify(cart));
     }
-
-    // localStorage.clear();
-
-    // Update the cart in the UI
     updateCart();
-    window.location.reload();
 };
 
+// sub total 
+const sub_total = document.querySelector('.sub-total');
 
 // Function to update the cart in the UI
 function updateCart() {
     const cartItemsList = document.querySelector('.header-cart-wrapitem');
     const totalPrice = document.querySelector('.header-cart-total');
-    // sub total 
-    const sub_total = document.querySelector('.sub-total');
+    
     cartItemsList.innerHTML = '';
 
     let total = 0;
@@ -340,30 +336,6 @@ function updateCart() {
     sub_total.textContent = `\$${total.toFixed(2)}`;
 }
 
-// Function to update the quantity of a product
-// const updateQuantity = (id) => {
-//     const product = cart.find(item => item.id === id);
-//     if (product) {
-//         product.qty += 1;
-//         if (product.qty <= 0) {
-//             // If quantity becomes zero or negative, remove the product from cart
-//             removeItem(id);
-//         } else {
-//             // Save updated cart to localStorage
-//             localStorage.setItem('cart', JSON.stringify(cart));
-//             updateCart();
-//         }
-//     }
-// };
-
-// const incrementQuantity = () => {
-//     alert("incrementQuantity");
-// };
-
-// const decrementQuantity = () => {
-//     alert("decrementQuantity");
-// };
-
 // Function to remove an item from the cart
 const removeItem = (id) => {
     cart = cart.filter(item => item.id !== id);
@@ -377,13 +349,14 @@ const removeAllItems = () => {
     updateCart();
 };
 
-// Function to calculate and display the total cart value
-// const updateCartTotal = () => {
-//     return totalValue = cart.reduce((total, item) => total + (item.price * item.qty), 0);
-// };
-
 document.querySelector('.cart-length').setAttribute('data-notify', cart.length);
 
 // Call the updateCart() function to initially display the cart on page load
 document.addEventListener('DOMContentLoaded', updateCart);
+
+const btnAddToCart = document.getElementById('addToCart');
+btnAddToCart.addEventListener('click', () => {
+    document.querySelector('.cart-length').setAttribute('data-notify', cart.length);
+})
+
 </script>

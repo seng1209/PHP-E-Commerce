@@ -1,3 +1,4 @@
+global$brandObj;
 <table class="table">
     <thead>
         <tr style="text-align: center;">
@@ -10,23 +11,20 @@
     </thead>
     <tbody>
         <?php
-            $select = "SELECT * FROM brands";
-            $result = $conn->query($select);
-            if($result->num_rows >0){
-                while($row = $result->fetch_assoc()){
+            $brands = $brandObj->readAll();
+            foreach($brands as $b){
         ?>
         <tr>
-            <th scope="row"><?=$row['brand_id']?></th>
-            <td><img src="uploads/images/brands/<?=$row['image']?>" alt="<?=$row['image']?>" width="200px" /></td>
-            <td><?=$row['brand']?></td>
-            <td><?=$row['description']?></td>
+            <th scope="row"><?=$b['brand_id']?></th>
+            <td><img src="uploads/images/brands/<?=$b['image']?>" alt="<?=$b['image']?>" width="200px" /></td>
+            <td><?=$b['brand']?></td>
+            <td><?=$b['description']?></td>
             <td style="text-align: center;">
-                <a href="index.php?p=brand&id=<?=$row['brand_id']?>" class="btn btn-warning m-1">Update</a>
-                <a href="model/brand/delete.php?id=<?=$row['brand_id']?>" class="btn btn-danger m-1">Delete</a>
+                <a href="index.php?p=brand&id=<?=$b['brand_id']?>" class="btn btn-warning m-1">Update</a>
+                <a href="model/brand/delete.php?id=<?=$b['brand_id']?>" class="btn btn-danger m-1">Delete</a>
             </td>
         </tr>
         <?php
-                }
             }
         ?>
     </tbody>

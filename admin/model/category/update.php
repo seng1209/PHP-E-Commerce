@@ -1,16 +1,16 @@
 <?php
-    $id = $_GET['id'];
+global $categoryObj;
+$id = $_GET['id'];
     $image = $category = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
-    $sql = "SELECT * FROM categories WHERE category_id = $id";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        $row = $result->fetch_assoc();
+
+    $row = $categoryObj->read($id);
+    if($row){
         $image = $row['image'];
         $category = $row['category'];
         $description = $row['description'];
     }
 
-    if(isset($_POST['submit'])){
+    if(isset($_POST['modify'])){
         $image = $row['image'];
         $category = $_POST['category'];
         $description = $_POST['description'];
@@ -40,12 +40,14 @@
         }
 
         try{
-            $sql = "UPDATE categories SET image = '$name', category = '$category', description = '$description' WHERE category_id = $id";
-            if(!$conn->query($sql) === TRUE)
+            if(!$categoryObj->update($id, $name, $category, $description) === TRUE)
                 die("Cannot update this category.");
         }catch(Exception $ex){
-            echo $ex;
+            echo $ex->getMessage();
         }
+
+        if(file_exists($image))
+            if(unlink($image));
     }
 ?>
 <div class="container-fluid">
@@ -68,9 +70,10 @@
                             <label for="#" class="form-label">Description</label>
                             <textarea class="form-control" name="description" rows=" 3"><?=$description?></textarea>
                         </div>
-                        <button type="submit" name="submit" class="btn btn-primary">
-                            Submit
+                        <button type="submit" name="modify" class="btn btn-primary">
+                            Modify
                         </button>
+                        <a href="index.php?p=category" class="btn btn-primary m-1">Create new Category</a>
                     </form>
                 </div>
             </div>

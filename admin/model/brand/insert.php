@@ -1,5 +1,7 @@
 <?php
-    $image = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
+
+global $brandObj;
+$image = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
     
     if(isset($_POST['submit'])){
         $brand = $_POST['brand'];
@@ -34,9 +36,7 @@
         }
 
         try{
-            $sql = "INSERT INTO brands(image, brand, description) 
-            VALUES ('$name', '$brand', '$description')";
-            if(!$conn->query($sql)){
+            if(!$brandObj->create($name, $brand, $description)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {

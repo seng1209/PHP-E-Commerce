@@ -1,18 +1,18 @@
 <?php
 
-    $id = $_GET['id'];
+global $brandObj;
+$id = $_GET['id'];
     $image = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
-    $sql = "SELECT * FROM brands WHERE brand_id = $id";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        $image = $row['image'];
-        $brand = $row['brand'];
-        $description = $row['description'];
+
+    $b = $brandObj->read($id);
+    if($b){
+        $image = $b['image'];
+        $brand = $b['brand'];
+        $description = $b['description'];
     }
     
-    if(isset($_POST['submit'])){
-        $image = $row['image'];
+    if(isset($_POST['modify'])){
+        $image = $b['image'];
         $brand = $_POST['brand'];
         $description = $_POST['description'];
         $file_name = $_FILES['image']['name'];
@@ -41,8 +41,7 @@
         }
 
         try{
-            $sql = "UPDATE brands SET image = '$name', brand = '$brand', description = '$description' WHERE brand_id = $id";
-            if(!$conn->query($sql) === TRUE){
+            if(!$brandObj->update($id, $name, $brand, $description) === TRUE){
                 die("Cannot update.");
             }
         }catch(Exception $ex){
@@ -60,8 +59,8 @@
             <h5 class="card-title fw-semibold mb-4">Brand</h5>
             <div class="card">
                 <div class="card-body">
-                    <form action="index.php?p=brand&id=<?=$row['brand_id'];?>" method="post"
-                        enctype="multipart/form-data">
+                    <form action="index.php?p=brand&id=<?=$b['brand_id'];?>" method="post"
+                        enctype="multipart/form-data">  
                         <div class=" mb-3">
                             <label for="formFile" class="form-label">Images</label>
                             <input class="form-control" type="file" name="image" id="formFile">
@@ -74,9 +73,10 @@
                             <label for="#" class="form-label">Description</label>
                             <textarea class="form-control" name="description" rows=" 3"><?=$description?></textarea>
                         </div>
-                        <button type=" submit" name="submit" class="btn btn-primary">
-                            Submit
+                        <button type=" submit" name="modify" class="btn btn-primary" id="modify">
+                            Modify
                         </button>
+                        <a href="index.php?p=brand" class="btn btn-primary m-1">Create New Brand?</a>
                     </form>
                 </div>
             </div>
