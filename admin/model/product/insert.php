@@ -1,5 +1,5 @@
 <?php
-global $productObj, $categoryObj, $brandObj;
+global $db;
 $image = $product_name = $price = $category_id = $category = $brand_id = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = $in_stock = "";
 
     if(isset($_POST['submit'])){
@@ -52,15 +52,25 @@ $image = $product_name = $price = $category_id = $category = $brand_id = $brand 
             die("Sorry, only JPG, JPEG, PNG & WEBP files are allowed.");
         }
 
+        $data = [
+                'image' => $name,
+                'product_name' => $product_name,
+                'price' => $price,
+                'category_id' => $category_id,
+                'brand_id' => $brand_id,
+                'description' => $description,
+                'in_stock' => $in_stock,
+        ];
+
         try{
-            if(!$productObj->create($name, $product_name, $price, $category_id, $brand_id, $description, $in_stock)){
+            if(!$db->create("products", $data)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {
                 die("Failed to upload image.");
             }
         }catch(Exception $ex){
-            echo $ex;
+            die($ex->getMessage());
         }
         
     }
@@ -89,7 +99,7 @@ $image = $product_name = $price = $category_id = $category = $brand_id = $brand 
                         <select class="form-select mb-3" name="category" aria-label="Default select example">
                             <option selected disabled>Category</option>
                             <?php
-                                $categories = $categoryObj->readAll();
+                                $categories = $db->read("categories");
                                 foreach($categories as $row){
                             ?>
                             <option value=" <?=$row['category_id']?>"><?=$row['category']?></option>
@@ -100,7 +110,7 @@ $image = $product_name = $price = $category_id = $category = $brand_id = $brand 
                         <select class="form-select mb-3" name="brand" aria-label="Default select example">
                             <option selected disabled>Brand</option>
                             <?php
-                                $brands = $brandObj->readAll();
+                                $brands = $db->read("brands");
                                 foreach($brands as $row){
                             ?>
                             <option value=" <?=$row['brand_id']?>"><?=$row['brand']?></option>

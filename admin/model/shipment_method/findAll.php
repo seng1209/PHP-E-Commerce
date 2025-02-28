@@ -1,7 +1,3 @@
-<?php
-    global $shipmentMethodObj;
-?>
-
 <table class="table">
     <thead>
     <tr style="text-align: center;">
@@ -15,7 +11,8 @@
     </thead>
     <tbody>
     <?php
-    $shipment_methods = $shipmentMethodObj->readAll();
+    global $db;
+    $shipment_methods = $db->read("shipment_methods");
     foreach($shipment_methods as $row){
         ?>
         <tr>

@@ -1,12 +1,11 @@
 <?php
 
     require "../../lib/Database.php";
-    require "../../lib/UserDB.php";
-    $userObj = new UserDB();
+    $db = new Database();
 
     $id = $_GET['id'];
     try {
-        if ($userObj->delete($id)){
+        if ($db->delete("users", "user_id = '$id'")) {
             header('Location: ../../index.php?p=user');
         }
     }catch(Exception $e){

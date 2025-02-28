@@ -1,12 +1,11 @@
 <?php
 
     require "../../lib/Database.php";
-    require "../../lib/PaymentMethodDB.php";
-    $paymentMethodObj = new PaymentMethodDB();
+    $db = new Database();
     $id = $_GET['id'];
 
     try {
-        if ($paymentMethodObj->delete($id) === true) {
+        if ($db->delete("payment_methods", "payment_method_id = '$id'") === true) {
             header("Location: ../../index.php?p=payment-method");
         }
     }catch (PDOException $e){

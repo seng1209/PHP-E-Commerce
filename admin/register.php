@@ -3,10 +3,7 @@
 
 <?php
     include "./components/head.php";
-
-    require "./lib/Database.php";
-    require "./lib/UserDB.php";
-
+    global $db;
     $image = $username = $password = $email = $phone = $address = $role = $file_name =
     $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 

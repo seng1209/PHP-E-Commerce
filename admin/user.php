@@ -1,8 +1,5 @@
 <div class="container-fluid">
     <?php
-
-        require "./lib/UserDB.php";
-        $userObj = new UserDB();
         $page = "insert.php";
         if (isset($_GET['id']))
             $page = "update.php";

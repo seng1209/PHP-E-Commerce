@@ -1,6 +1,6 @@
 <?php
 
-global $brandObj;
+global $db;
 $image = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
     
     if(isset($_POST['submit'])){
@@ -35,15 +35,21 @@ $image = $brand = $description = $file_name = $temp_name = $extension = $uuid = 
             die("Sorry, only JPG, JPEG, PNG & WEBP files are allowed.");
         }
 
+        $data = [
+                'image' => $name,
+                'brand' => $brand,
+                'description' => $description,
+        ];
+
         try{
-            if(!$brandObj->create($name, $brand, $description)){
+            if(!$db->create("brands", $data)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {
                 die("Failed to upload image.");
             }
         }catch(Exception $ex){
-            echo $ex;
+            die($ex->getMessage());
         }
         
     }

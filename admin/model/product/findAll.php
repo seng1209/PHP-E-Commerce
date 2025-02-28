@@ -15,8 +15,8 @@
     </thead>
     <tbody>
         <?php
-            global $productObj;
-            $products = $productObj->readAll();
+            global $db;
+            $products = $db->read("products");
             foreach($products as $row){
         ?>
         <tr>

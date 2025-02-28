@@ -1,6 +1,3 @@
-<?php
-    global $categoryObj;
-?>
 <table class="table">
     <thead>
         <tr style="text-align: center;">
@@ -13,7 +10,8 @@
     </thead>
     <tbody>
         <?php
-            $categories = $categoryObj->readAll();
+            global $db;
+            $categories = $db->read("categories");
             foreach($categories as $row){
 
             

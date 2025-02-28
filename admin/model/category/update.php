@@ -1,9 +1,9 @@
 <?php
-global $categoryObj;
+global $db;
 $id = $_GET['id'];
     $image = $category = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
-    $row = $categoryObj->read($id);
+    $row = $db->read("categories", "*", "category_id = '$id'");
     if($row){
         $image = $row['image'];
         $category = $row['category'];
@@ -35,19 +35,25 @@ $id = $_GET['id'];
             if (!move_uploaded_file($temp_name, $folder)) {
                 die("Failed to upload image.");
             }
+
+            if (file_exists($image))
+                unlink($image);
         }else{
             $name = $image;
         }
 
+        $data = [
+                'image' => $name,
+                'category' => $category,
+                'description' => $description
+        ];
+
         try{
-            if(!$categoryObj->update($id, $name, $category, $description) === TRUE)
+            if(!$db->update("categories", $data, "category_id = '$id'") === TRUE)
                 die("Cannot update this category.");
         }catch(Exception $ex){
             echo $ex->getMessage();
         }
-
-        if(file_exists($image))
-            if(unlink($image));
     }
 ?>
 <div class="container-fluid">

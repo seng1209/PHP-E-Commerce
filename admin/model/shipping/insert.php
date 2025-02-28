@@ -1,4 +1,5 @@
 <?php
+    global $db;
     $image = $shipping_name = $shipping_datetime = $price = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
     if(isset($_POST['submit'])){
@@ -34,7 +35,7 @@
         }
 
         try{
-            if(!$shippingObj->create($name, $shipping_name, $shipping_price)){
+            if(!$db->create($name, $shipping_name)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {

@@ -1,7 +1,3 @@
-<?php
-global $paymentMethodObj;
-?>
-
 <table class="table">
     <thead>
     <tr style="text-align: center;">
@@ -15,7 +11,8 @@ global $paymentMethodObj;
     </thead>
     <tbody>
     <?php
-    $payment_methods = $paymentMethodObj->readAll();
+    global $db;
+    $payment_methods = $db->read("payment_methods");
     foreach($payment_methods as $row){
         ?>
         <tr>

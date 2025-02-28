@@ -1,5 +1,5 @@
 <?php
-global $paymentMethodObj;
+global $db;
 $payment_method_id = $image = $payment_method = $price = $description = $file_name = $temp_name = $extension =
 $uuid = $name = $folder = $imageFileType = "";
 
@@ -40,8 +40,15 @@ if (isset($_POST["submit"])) {
         die("Sorry, only JPG, JPEG, PNG & WEBP files are allowed.");
     }
 
+    $data = [
+            'image' => $name,
+            'name' => $payment_method,
+            'price' => $price,
+            'description' => $description,
+    ];
+
     try {
-        if (!$paymentMethodObj->create($name, $payment_method, $price, $description)){
+        if (!$db->create("payment_methods", $data)){
             die("Failed to create shipment method!");
         }
         if (!move_uploaded_file($temp_name, $folder)) {

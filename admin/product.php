@@ -1,11 +1,5 @@
 <div class="container-fluid">
-    <?php 
-        require "./lib/ProductDB.php";
-        require "./lib/CategoryDB.php";
-        require "./lib/BrandDB.php";
-        $productObj = new Product();
-        $categoryObj = new Category();
-        $brandObj = new Brand();
+    <?php
         $page = "insert.php";
         if(isset($_GET['id']))
             $page = "update.php";

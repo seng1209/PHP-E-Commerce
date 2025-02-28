@@ -1,10 +1,10 @@
 <?php
-global $shipmentMethodObj;
+global $db;
 $shipment_method_id = $image = $shipment_method = $price = $description = $file_name = $temp_name = $extension =
 $uuid = $name = $folder = $imageFileType = "";
 
 $id = $_GET['id'];
-$row = $shipmentMethodObj->read($id);
+$row = $db->read("shipment_methods", "*", "shipment_method_id = '$id'");
 
 if ($row){
     $image = $row['image'];
@@ -36,7 +36,7 @@ if (isset($_POST["modify"])) {
         $extension = explode(".", $file_name);
         $uuid = gen_uuid();
         $name = $uuid . "." . $extension[1];
-        $folder = "uploads/images/shipment_method/" . $name;
+        $folder = "uploads/images/shipment_methods/" . $name;
         $imageFileType = strtolower(pathinfo($folder, PATHINFO_EXTENSION));
 
         if(Validator::checkFileSize($_FILES['image']['size'])){
@@ -50,12 +50,22 @@ if (isset($_POST["modify"])) {
         if (!move_uploaded_file($temp_name, $folder)) {
             die("Failed to upload image.");
         }
+
+        if (file_exists($image))
+            unlink($image);
     }else{
         $name = $image;
     }
 
+    $data = [
+        'image' => $name,
+        'name' => $shipment_method,
+        'price' => $price,
+        'description' => $description,
+    ];
+
     try {
-        if (!$shipmentMethodObj->update($id, $name, $shipment_method, $price, $description)){
+        if (!$db->update("shipment_methods", $data, "shipment_method_id = '$id'")){
             die("Failed to create shipment method!");
         }
     }catch (Exception $ex){
@@ -63,8 +73,6 @@ if (isset($_POST["modify"])) {
         return false;
     }
 
-    if (file_exists($image))
-        if (unlink($image));
 }
 
 ?>

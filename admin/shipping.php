@@ -1,7 +1,5 @@
 <div class="container-fluid">
-    <?php 
-        require "./lib/ShippingDB.php";
-        $shippingObj = new Shipping();
+    <?php
         $page = "insert.php";
         if(isset($_GET['id']))
             $page = "update.php";

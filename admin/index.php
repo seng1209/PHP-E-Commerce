@@ -6,6 +6,7 @@
     require "./model/Validator.php";
     include "./components/head.php";
     require "./lib/Database.php";
+    $db = new Database();
     $pages = "dashboard.php";
     $p = "dashboard";
     if(isset($_GET['p'])){

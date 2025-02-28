@@ -1,6 +1,6 @@
 <?php
-global $shipmentMethodObj;
-$shipment_method_id = $image = $shipment_method = $price = $description = $file_name = $temp_name = $extension =
+global $db;
+    $shipment_method_id = $image = $shipment_method = $price = $description = $file_name = $temp_name = $extension =
     $uuid = $name = $folder = $imageFileType = "";
 
     if (isset($_POST["submit"])) {
@@ -40,8 +40,15 @@ $shipment_method_id = $image = $shipment_method = $price = $description = $file_
             die("Sorry, only JPG, JPEG, PNG & WEBP files are allowed.");
         }
 
+        $data = [
+                'image' => $name,
+                'name' => $shipment_method,
+                'price' => $price,
+                'description' => $description,
+        ];
+
         try {
-            if (!$shipmentMethodObj->create($name, $shipment_method, $price, $description)){
+            if (!$db->create("shipment_methods", $data)){
                 die("Failed to create shipment method!");
             }
             if (!move_uploaded_file($temp_name, $folder)) {

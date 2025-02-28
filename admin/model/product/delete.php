@@ -1,10 +1,9 @@
 <?php
     require "../../lib/Database.php";
-    require "../../lib/ProductDB.php";
-    $productObj = new Product();
+    $db = new Database();
     $id = $_GET['id'];
     try{
-        if($productObj->delete($id) === TRUE)
+        if($db->delete("products", "product_id = '$id'") === TRUE)
             header("Location:../../index.php?p=product");
         else
             die("Cannot delete this product.");

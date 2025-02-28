@@ -1,6 +1,6 @@
 <?php
 
-    global $userObj;
+    global $db;
     $image = $username = $password = $email = $phone = $address = $role = $file_name =
     $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
@@ -39,7 +39,6 @@
 
         if (Validator::notEmpty($fileName)) {
             $temp_name = $_FILES["image"]["tmp_name"];
-//            $extension = explode(".", $file_name);
             $extension = pathinfo($fileName, PATHINFO_EXTENSION);
             $uuid = gen_uuid();
             $name = $uuid . "." . $extension;
@@ -56,8 +55,18 @@
             die("Sorry, only JPG, JPEG, PNG & WEBP files are allowed.");
         }
 
+        $data = [
+                'image' => $name,
+                'username' => $username,
+                'password' => $password,
+                'email' => $email,
+                'phone' => $phone,
+                'address' => $address,
+                'role' => $role,
+        ];
+
         try {
-            if (!$userObj->create($name, $username, $password, $email, $phone, $address, $role)){
+            if (!$db->create('users', $data)){
                 die("Fail to insert user");
             }
             if (!move_uploaded_file($temp_name, $folder)){

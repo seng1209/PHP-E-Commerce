@@ -1,7 +1,5 @@
 <div class="container-fluid">
-    <?php 
-        require "./lib/CategoryDB.php";
-        $categoryObj = new Category();
+    <?php
         $page = "insert.php";
         if(isset($_GET['id']))
             $page = "update.php";

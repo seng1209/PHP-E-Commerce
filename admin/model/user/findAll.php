@@ -13,9 +13,9 @@
     </thead>
     <tbody>
     <?php
-        global $userObj;
+        global $db;
 
-        $users = $userObj->readAll();
+        $users = $db->read("users");
         foreach ($users as $user) {
     ?>
     <tr>

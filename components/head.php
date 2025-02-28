@@ -35,6 +35,6 @@
     <script>
     // Get cart from localStorage, or initialize an empty cart if no data exists
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
     </script>
+<!--    <script src="https://www.paypal.com/sdk/js?AQfAeIbwBEwlhXqIbD8EjsaNnn8h53yNV-pz0IG707-iD42l8rjUET8bTPrBWHGtDhd99Q8ZRSVFRhwG&currency=USD">-->
 </head>

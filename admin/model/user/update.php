@@ -1,12 +1,12 @@
 <?php
 
-global $userObj;
+global $db;
 $image = $username = $password = $email = $phone = $address = $role = $file_name =
 $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
 $id = $_GET['id'];
 
-$row = $userObj->read($id);
+$row = $db->read("users", "*" , "user_id = '$id'");
 if ($row){
     $image = $row['image'];
     $username = $row['username'];
@@ -75,8 +75,18 @@ if (isset($_POST["modify"])) {
     }else
         $name = $image;
 
+    $data = [
+        'image' => $name,
+        'username' => $username,
+        'password' => $password,
+        'email' => $email,
+        'phone' => $phone,
+        'address' => $address,
+        'role' => $role,
+    ];
+
     try {
-        if (!$userObj->update($id, $name, $username, $password, $email, $phone, $address, $role)){
+        if (!$db->update("users", $data, "user_id = '$id'")) {
             die("Fail to update user");
         }
     }catch (Exception $e){

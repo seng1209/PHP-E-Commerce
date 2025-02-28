@@ -1,9 +1,10 @@
 <?php
+    global $db;
     $image = $shipping_name = $price = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
     $id = $_GET['id'];
 
-    $row = $shippingObj->read($id);
+    $row = $db->read($id);
     if($row){
         $image = $row['image'];
         $shipping_name = $row['shipping_name'];
@@ -47,7 +48,7 @@
         }
 
         try{
-            if(!$shippingObj->update($id, $name, $shipping_name, $price)){
+            if(!$db->update($id, $name, $shipping_name, $price)){
                 die("Failed to insert data.");
             }
         }catch(Exception $ex){

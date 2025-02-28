@@ -1,7 +1,5 @@
 <?php
-    require "./admin/lib/ShipmentMethodDB.php";
-    $shipmentMethodObj = new ShipmentMethodDB();
-    $shippingObj = new Shipping();
+    global $db;
     $shipping_id = $image = $shipping_name = $price = $sub_total = $total_price = "";
 
     $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Kandal", "Sihanoukville", "Oddar Meanchey", "Pursat", "Kampong Thom", "Kampong Speu", "Svay Rieng", "Takéo", "Kampong Chhnang", "Kampong Cham", "Prey Veng", "Tboung Khmum", "Kampot", "Ratanakiri", "Koh Kong", "Preah Vihear", "Mondulkiri", "Kep");
@@ -104,7 +102,7 @@
                                     <select class="js-select2" name="time" id="shipping-method">
                                         <option selected disabled>Shipping Methods...</option>
                                         <?php
-                                            $shipment_methods = $shipmentMethodObj->readAll();
+                                            $shipment_methods = $db->read("shipment_methods");
                                             foreach($shipment_methods as $s){
                                                 $shipment_method_id = $s['$shipment_method_id'];
                                                 $shipping_name = $s['name'];
@@ -131,11 +129,12 @@
                                 <span class="stext-112 cl8"> Calculate Payment </span>
                                 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
                                     <select class="js-select2" name="time">
-                                        <option selected disabled>Select a city....</option>
+                                        <option selected disabled>Select a Payment method</option>
                                         <?php
-                                        foreach ($cities as $city) {
+                                        $payment_methods = $db->read("payment_methods");
+                                        foreach ($payment_methods as $pay) {
                                             ?>
-                                            <option value="<?=$city?>"><?=$city?></option>
+                                            <option value="<?=$pay['name']?>"><?=$pay['name']?></option>
                                             <?php
                                         }
                                         ?>
@@ -172,7 +171,7 @@
         
         cartListTables.innerHTML = '';
         if (cartListTables.length > 0) {
-            const cartListTable = cartListTables[0]; // Select the first element in the collection
+            const cartListTable = cartListTables[0];
 
             cart.forEach(item => {
                 const listTable = document.createElement('tr');
@@ -301,14 +300,9 @@
     document.getElementById('shipping-method').onchange = function() {
         const selectedValue = this.value;
         const selectedText = this.options[this.selectedIndex].text;
-        // console.log('Selected Shipping Method ID:', selectedValue);
-        // console.log('Selected Shipping Method Name:', selectedText);
         const arr = selectedText.split("-");
-        // console.log('Shipping Name:', arr[0]);
-        // console.log('Shipping Price:', arr[1]);
 
         const subtotal = document.querySelector('.sub-total');
-        // console.log("Sub total:", subtotal.textContent);
         const total_price = parseFloat(subtotal.textContent.replace(/[$,]/g, '')) + parseFloat(arr[1].replace(/[$,]/g, '')) + "";
         document.querySelector('.total-amount').innerHTML = "$" + total_price;
     };

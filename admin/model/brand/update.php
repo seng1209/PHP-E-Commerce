@@ -1,10 +1,10 @@
 <?php
 
-global $brandObj;
+global $db;
 $id = $_GET['id'];
     $image = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
-    $b = $brandObj->read($id);
+    $b = $db->read("brands", "*", "brand_id = " . $id);
     if($b){
         $image = $b['image'];
         $brand = $b['brand'];
@@ -36,20 +36,26 @@ $id = $_GET['id'];
             if (!move_uploaded_file($temp_name, $folder)) {
                 die("Failed to upload image.");
             }
+
+            if (file_exists($image))
+                unlink($image);
         }else{
             $name = $image;
         }
 
+        $data = [
+            'image' => $name,
+            'brand' => $brand,
+            'description' => $description,
+        ];
+
         try{
-            if(!$brandObj->update($id, $name, $brand, $description) === TRUE){
+            if(!$db->update("brands", $data, "brand_id = " . $id)){
                 die("Cannot update.");
             }
         }catch(Exception $ex){
-            echo $ex;
+            die($ex->getMessage());
         }
-
-        if(file_exists($image))
-            if(unlink($image));
         
     }
 ?>
@@ -59,7 +65,7 @@ $id = $_GET['id'];
             <h5 class="card-title fw-semibold mb-4">Brand</h5>
             <div class="card">
                 <div class="card-body">
-                    <form action="index.php?p=brand&id=<?=$b['brand_id'];?>" method="post"
+                    <form method="post"
                         enctype="multipart/form-data">  
                         <div class=" mb-3">
                             <label for="formFile" class="form-label">Images</label>

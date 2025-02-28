@@ -256,11 +256,9 @@
 
         <div class="row isotope-grid">
             <?php
-                require "./admin/model/database.php";
-                $select = "SELECT * FROM products";
-                $result = $conn->query($select);
-                if($result->num_rows > 0){
-                    while($row = $result->fetch_assoc()){
+                global $db;
+                $products = $db->read("products");
+                foreach ($products as $row) {
             ?>
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                 <div class="block2">
@@ -297,7 +295,6 @@
                 </div>
             </div>
             <?php
-                    }
                 }
             ?>
         </div>

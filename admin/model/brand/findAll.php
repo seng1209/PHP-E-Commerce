@@ -1,4 +1,3 @@
-global$brandObj;
 <table class="table">
     <thead>
         <tr style="text-align: center;">
@@ -11,7 +10,8 @@ global$brandObj;
     </thead>
     <tbody>
         <?php
-            $brands = $brandObj->readAll();
+            global $db;
+            $brands = $db->read("brands");
             foreach($brands as $b){
         ?>
         <tr>

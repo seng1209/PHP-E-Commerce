@@ -10,7 +10,8 @@
     </thead>
     <tbody>
         <?php
-            $shippings = $shippingObj->readAll();
+            global $db;
+            $shippings = $db->read("shipping");
             foreach($shippings as $row){
         ?>
         <tr>

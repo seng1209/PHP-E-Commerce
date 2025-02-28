@@ -1,10 +1,9 @@
 <?php
-
-    $productObj = new Product();
+    global $db;
     $id = $_GET['id'];
-    $product_id = $image = $product_name = $price = $description = "";
+    $product_id = $image = $product_name = $price = $category_id = $description = "";
 
-    $row = $productObj->read($id);
+    $row = $db->read("products", "*", "product_id = '$id'");
     if($row){
         $image = $row['image'];
         $product_name = $row['product_name'];
@@ -136,6 +135,10 @@ const qty = 1;
                                     onclick="addToCart(productId, image, productName, price, qty)" id="addToCart">
                                     Add to cart
                                 </button>
+<!--                                <form method="post">-->
+<!--                                    <input type="hidden" name="product_id" value="--><?php //=$product_id?><!--">-->
+<!--                                    <button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" name="add_to_cart">Add to Cart</button>-->
+<!--                                </form>-->
                             </div>
                         </div>
                     </div>
@@ -364,49 +367,49 @@ const qty = 1;
             <div class="slick2">
 
                 <?php
-                $rows = $productObj->readByCategory($category_id);
+                $rows = $db->readBy("products", "*", " category_id = '$category_id'");
                 foreach ($rows as $row) {
                     $image = $row['image'];
                     $product_name = $row['product_name'];
                     $price = $row['price'];
                     $category_id = $row['category_id'];
                     $description = $row['description'];
-                ?>
-                <div class=" item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                    <!-- Block2 -->
-                    <div class="block2">
-                        <div class="block2-pic hov-img0">
-                            <img src="./admin/uploads/images/products/<?=$image?>" alt="<?=$image?>" />
+                    ?>
+                    <div class=" item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+                        <!-- Block2 -->
+                        <div class="block2">
+                            <div class="block2-pic hov-img0">
+                                <img src="./admin/uploads/images/products/<?=$image?>" alt="<?=$image?>" />
 
-                            <a href="#"
-                                class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                Quick View
-                            </a>
-                        </div>
-
-                        <div class="block2-txt flex-w flex-t p-t-14">
-                            <div class="block2-txt-child1 flex-col-l">
-                                <a href="index.php?p=product-detail&id=<?=$row['product_id']?>"
-                                    class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                    <?=$product_name?>
+                                <a href="#"
+                                   class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                    Quick View
                                 </a>
-
-                                <span class="stext-105 cl3"> $<?=$price?> </span>
                             </div>
 
-                            <div class="block2-txt-child2 flex-r p-t-3">
-                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                    <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                        alt="ICON" />
-                                    <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                        src="images/icons/icon-heart-02.png" alt="ICON" />
-                                </a>
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l">
+                                    <a href="index.php?p=product-detail&id=<?=$row['product_id']?>"
+                                       class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        <?=$product_name?>
+                                    </a>
+
+                                    <span class="stext-105 cl3"> $<?=$price?> </span>
+                                </div>
+
+                                <div class="block2-txt-child2 flex-r p-t-3">
+                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
+                                             alt="ICON" />
+                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                             src="images/icons/icon-heart-02.png" alt="ICON" />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <?php
-                    }
+                    <?php
+                }
                 ?>
             </div>
         </div>

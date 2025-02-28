@@ -1,5 +1,5 @@
 <?php
-global $categoryObj;
+global $db;
 $image = $category = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
     if(isset($_POST['submit'])){
@@ -34,8 +34,14 @@ $image = $category = $description = $file_name = $temp_name = $extension = $uuid
             die("Sorry, only JPG, JPEG, PNG & WEBP files are allowed.");
         }
 
+        $data = [
+                'image' => $name,
+                'category' => $category,
+                'description' => $description,
+        ];
+
         try{
-            if(!$categoryObj->create($name, $category, $description)){
+            if(!$db->create("categories", $data)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {

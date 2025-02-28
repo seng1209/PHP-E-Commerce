@@ -1,7 +1,5 @@
 <div class="container-fluid">
-    <?php 
-        require "./lib/BrandDB.php";
-        $brandObj = new Brand();
+    <?php
         $page = "insert.php";
         if(isset($_GET['id']))
             $page = "update.php";            

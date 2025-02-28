@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php 
+<?php
     require "./admin/lib/Database.php";
-    require "./admin/lib/ProductDB.php";
-    require  "./admin/lib/ShippingDB.php";
+//    require "./admin/lib/Context.php";
     include "./components/head.php";
+    $db = new Database();
     $pages = "home.php";
     $p = "home";
     $banner = true;
