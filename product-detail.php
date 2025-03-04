@@ -1,23 +1,24 @@
 <?php
-    global $db;
-    $id = $_GET['id'];
-    $product_id = $image = $product_name = $price = $category_id = $description = "";
+global $db;
+$id = $_GET['id'];
+$product_id = $image = $product_name = $price = $category_id = $description = "";
 
-    $row = $db->read("products", "*", "product_id = '$id'");
-    if($row){
-        $image = $row['image'];
-        $product_name = $row['product_name'];
-        $price = $row['price'];
-        $category_id = $row['category_id'];
-        $description = $row['description'];
-    }
+$row = $db->read("products", "*", "product_id = '$id'");
+if($row){
+    $image = $row['image'];
+    $product_name = $row['product_name'];
+    $price = $row['price'];
+    $category_id = $row['category_id'];
+    $description = $row['description'];
+}
+
 ?>
 <script>
-const productId = "<?=$_GET['id']?>";
-const image = "<?=$image?> ";
-const productName = "<?=$product_name?>";
-const price = "<?=$price?>";
-const qty = 1;
+    //const productId = "<?php //=$_GET['id']?>//";
+    //const image = "<?php //=$image?>// ";
+    //const productName = "<?php //=$product_name?>//";
+    //const price = "<?php //=$price?>//";
+    //const qty = 1;
 </script>
 <!-- Product Detail -->
 <section class="sec-product-detail bg0 p-t-65 p-b-60">
@@ -35,7 +36,7 @@ const qty = 1;
                                     <img src="./admin/uploads/images/products/<?=$image?>" alt="IMG-PRODUCT" />
 
                                     <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                        href="./admin/uploads/images/products/<?=$image?>">
+                                       href="./admin/uploads/images/products/<?=$image?>">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
@@ -46,7 +47,7 @@ const qty = 1;
                                     <img src="./admin/uploads/images/products/<?=$image?>" alt="IMG-PRODUCT" />
 
                                     <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                        href="./admin/uploads/images/products/<?=$image?>">
+                                       href="./admin/uploads/images/products/<?=$image?>">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
@@ -57,7 +58,7 @@ const qty = 1;
                                     <img src="./admin/uploads/images/products/<?=$image?>" alt="IMG-PRODUCT" />
 
                                     <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                        href="./admin/uploads/images/products/<?=$image?>">
+                                       href="./admin/uploads/images/products/<?=$image?>">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
@@ -117,28 +118,28 @@ const qty = 1;
 
                         <div class="flex-w flex-r-m p-b-10">
                             <div class="size-204 flex-w flex-m respon6-next">
-                                <!-- <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                        <i class="fs-16 zmdi zmdi-minus"></i>
-                                    </div>
 
-                                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product"
-                                        id="num-product" value="1" />
-
-                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                        <i class="fs-16 zmdi zmdi-plus"></i>
-                                    </div>
-                                </div> -->
-
-                                <button
-                                    class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
-                                    onclick="addToCart(productId, image, productName, price, qty)" id="addToCart">
-                                    Add to cart
-                                </button>
-<!--                                <form method="post">-->
-<!--                                    <input type="hidden" name="product_id" value="--><?php //=$product_id?><!--">-->
-<!--                                    <button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" name="add_to_cart">Add to Cart</button>-->
-<!--                                </form>-->
+<!--                                <button-->
+<!--                                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"-->
+<!--                                        onclick="addToCart(productId, image, productName, price, qty)" id="addToCart">-->
+<!--                                    Add to cart-->
+<!--                                </button>-->
+                                <form method="post">
+<!--                                    <div class="wrap-num-product flex-w m-r-20 m-tb-10">-->
+<!--                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">-->
+<!--                                            <i class="fs-16 zmdi zmdi-minus"></i>-->
+<!--                                        </div>-->
+<!---->
+<!--                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product"-->
+<!--                                               id="num-product" value="1" />-->
+<!---->
+<!--                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">-->
+<!--                                            <i class="fs-16 zmdi zmdi-plus"></i>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <input type="hidden" name="product_id" value="<?=$id?>">
+                                    <button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" name="add_to_cart">Add to Cart</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -147,24 +148,24 @@ const qty = 1;
                     <div class="flex-w flex-m p-l-100 p-t-40 respon7">
                         <div class="flex-m bor9 p-r-10 m-r-11">
                             <a href="#"
-                                class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-                                data-tooltip="Add to Wishlist">
+                               class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
+                               data-tooltip="Add to Wishlist">
                                 <i class="zmdi zmdi-favorite"></i>
                             </a>
                         </div>
 
                         <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                            data-tooltip="Facebook">
+                           data-tooltip="Facebook">
                             <i class="fa fa-facebook"></i>
                         </a>
 
                         <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                            data-tooltip="Twitter">
+                           data-tooltip="Twitter">
                             <i class="fa fa-twitter"></i>
                         </a>
 
                         <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                            data-tooltip="Google Plus">
+                           data-tooltip="Google Plus">
                             <i class="fa fa-google-plus"></i>
                         </a>
                     </div>
@@ -318,24 +319,24 @@ const qty = 1;
                                             <div class="col-12 p-b-5">
                                                 <label class="stext-102 cl3" for="review">Your review</label>
                                                 <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-                                                    id="review" name="review"></textarea>
+                                                          id="review" name="review"></textarea>
                                             </div>
 
                                             <div class="col-sm-6 p-b-5">
                                                 <label class="stext-102 cl3" for="name">Name</label>
                                                 <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text"
-                                                    name="name" />
+                                                       name="name" />
                                             </div>
 
                                             <div class="col-sm-6 p-b-5">
                                                 <label class="stext-102 cl3" for="email">Email</label>
                                                 <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email"
-                                                    type="text" name="email" />
+                                                       type="text" name="email" />
                                             </div>
                                         </div>
 
                                         <button
-                                            class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+                                                class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
                                             Submit
                                         </button>
                                     </form>
@@ -381,10 +382,10 @@ const qty = 1;
                             <div class="block2-pic hov-img0">
                                 <img src="./admin/uploads/images/products/<?=$image?>" alt="<?=$image?>" />
 
-                                <a href="#"
-                                   class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
+<!--                                <a href="#"-->
+<!--                                   class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">-->
+<!--                                    Quick View-->
+<!--                                </a>-->
                             </div>
 
                             <div class="block2-txt flex-w flex-t p-t-14">

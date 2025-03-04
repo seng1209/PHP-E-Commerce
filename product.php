@@ -228,21 +228,28 @@
 
         <div class="row isotope-grid">
             <?php
-                require "./admin/model/database.php";
-                $select = "SELECT * FROM products";
-                $result = $conn->query($select);
-                if($result->num_rows > 0){
-                    while($row = $result->fetch_assoc()){
+                global $db;
+                $products = $db->read("products");
+                foreach ($products as $row) {
             ?>
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                 <div class="block2">
                     <div class="block2-pic hov-img0">
                         <img src="./admin/uploads/images/products/<?=$row['image']?>" alt="<?=$row['image']?>">
 
-                        <a href="index.php?product_id=<?=$row['product_id']?>"
-                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                            Quick View
-                        </a>
+<!--                        <form action="index.php?product_id=--><?php //=$row['product_id']?><!--" method="post">-->
+<!--                            <input-->
+<!--                                    type="submit"-->
+<!--                                    name="view"-->
+<!--                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"-->
+<!--                                    value="Quick View"-->
+<!--                            />-->
+<!--                        </form>-->
+
+<!--                        <a href="index.php?product_id=--><?php //=$row['product_id']?><!--"-->
+<!--                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">-->
+<!--                            Quick View-->
+<!--                        </a>-->
                     </div>
 
                     <div class="block2-txt flex-w flex-t p-t-14">
@@ -269,7 +276,6 @@
                 </div>
             </div>
             <?php
-                    }
                 }
             ?>
         </div>

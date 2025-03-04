@@ -44,6 +44,10 @@
                 $pages = "shipping.php";
                 break;
             }
+            case "payment": {
+                $pages = "payment.php";
+                break;
+            }
         }
     }
 ?>

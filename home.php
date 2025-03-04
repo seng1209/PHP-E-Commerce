@@ -265,10 +265,19 @@
                     <div class="block2-pic hov-img0">
                         <img src="./admin/uploads/images/products/<?=$row['image']?>" alt="<?=$row['image']?>">
 
-                        <a href="index.php?product_id=<?=$row['product_id']?>"
-                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                            Quick View
-                        </a>
+<!--                        <form action="index.php?product_id=--><?php //=$row['product_id']?><!--" method="post">-->
+<!--                            <input-->
+<!--                                    type="submit"-->
+<!--                                    name="view"-->
+<!--                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"-->
+<!--                                    value="Quick View"-->
+<!--                            />-->
+<!--                        </form>-->
+
+<!--                        <a href="index.php?product_id=--><?php //=$row['product_id']?><!--"-->
+<!--                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">-->
+<!--                            Quick View-->
+<!--                        </a>-->
                     </div>
 
                     <div class="block2-txt flex-w flex-t p-t-14">

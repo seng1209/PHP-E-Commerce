@@ -259,104 +259,102 @@ $('.js-pscroll').each(function() {
 <script src="js/main.js"></script>
 <script>
 // Cart class definition
-class Product {
-    constructor(productId, image, name, price, qty) {
-        this.productId = productId;
-        this.image = image;
-        this.name = name;
-        this.price = price;
-        this.qty = qty;
-    }
-}
-
-
+// class Product {
+//     constructor(productId, image, name, price, qty) {
+//         this.productId = productId;
+//         this.image = image;
+//         this.name = name;
+//         this.price = price;
+//         this.qty = qty;
+//     }
+// }
 
 // Function to add product to the cart
-const addToCart = (productId, image, name, price, qty) => {
-    const product = new Product(productId, image, name, price, qty);
-    const existProduct = cart.find((item) => item.productId === product.productId);
-    if (existProduct) {
-        existProduct.qty += 1;
-        localStorage.setItem('cart', JSON.stringify(cart));
-    } else {
-        console.log(product.productId + " " + product.name);
-        cart.push(product);
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    updateCart();
-};
+// const addToCart = (productId, image, name, price, qty) => {
+//     const product = new Product(productId, image, name, price, qty);
+//     const existProduct = cart.find((item) => item.productId === product.productId);
+//     if (existProduct) {
+//         existProduct.qty += 1;
+//         localStorage.setItem('cart', JSON.stringify(cart));
+//     } else {
+//         console.log(product.productId + " " + product.name);
+//         cart.push(product);
+//         localStorage.setItem('cart', JSON.stringify(cart));
+//     }
+//     updateCart();
+// };
 
 // sub total 
-const sub_total = document.querySelector('.sub-total');
+// const sub_total = document.querySelector('.sub-total');
 
 // Function to update the cart in the UI
-function updateCart() {
-    const cartItemsList = document.querySelector('.header-cart-wrapitem');
-    const totalPrice = document.querySelector('.header-cart-total');
-    
-    cartItemsList.innerHTML = '';
-
-    let total = 0;
-    cart.forEach(item => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('header-cart-item', 'flex-w', 'flex-t', 'm-b-12');
-
-        const imgDiv = document.createElement('div');
-        imgDiv.classList.add('header-cart-item-img');
-        const imgElement = document.createElement('img');
-        imgElement.src =
-            `./admin/uploads/images/products/${item.image}`; 
-        imgElement.alt = `./admin/uploads/images/products/${item.image}`;
-        imgDiv.appendChild(imgElement);
-
-        const txtDiv = document.createElement('div');
-        txtDiv.classList.add('header-cart-item-txt', 'p-t-8');
-
-        const itemNameLink = document.createElement('a');
-        itemNameLink.href = '#';
-        itemNameLink.classList.add('header-cart-item-name', 'm-b-18', 'hov-cl1', 'trans-04');
-        itemNameLink.textContent = item.name;
-
-        const itemInfoSpan = document.createElement('span');
-        itemInfoSpan.classList.add('header-cart-item-info');
-        itemInfoSpan.textContent = `${item.qty} x $${item.price}`;
-
-        txtDiv.appendChild(itemNameLink);
-        txtDiv.appendChild(itemInfoSpan);
-
-        listItem.appendChild(imgDiv);
-        listItem.appendChild(txtDiv);
-
-        cartItemsList.appendChild(listItem);
-
-        total += item.price * item.qty;
-    });
-
-    totalPrice.textContent = `Total : \$${total.toFixed(2)}`;
-    sub_total.textContent = `\$${total.toFixed(2)}`;
-}
+// function updateCart() {
+//     const cartItemsList = document.querySelector('.header-cart-wrapitem');
+//     const totalPrice = document.querySelector('.header-cart-total');
+//
+//     cartItemsList.innerHTML = '';
+//
+//     let total = 0;
+//     cart.forEach(item => {
+//         const listItem = document.createElement('li');
+//         listItem.classList.add('header-cart-item', 'flex-w', 'flex-t', 'm-b-12');
+//
+//         const imgDiv = document.createElement('div');
+//         imgDiv.classList.add('header-cart-item-img');
+//         const imgElement = document.createElement('img');
+//         imgElement.src =
+//             `./admin/uploads/images/products/${item.image}`;
+//         imgElement.alt = `./admin/uploads/images/products/${item.image}`;
+//         imgDiv.appendChild(imgElement);
+//
+//         const txtDiv = document.createElement('div');
+//         txtDiv.classList.add('header-cart-item-txt', 'p-t-8');
+//
+//         const itemNameLink = document.createElement('a');
+//         itemNameLink.href = '#';
+//         itemNameLink.classList.add('header-cart-item-name', 'm-b-18', 'hov-cl1', 'trans-04');
+//         itemNameLink.textContent = item.name;
+//
+//         const itemInfoSpan = document.createElement('span');
+//         itemInfoSpan.classList.add('header-cart-item-info');
+//         itemInfoSpan.textContent = `${item.qty} x $${item.price}`;
+//
+//         txtDiv.appendChild(itemNameLink);
+//         txtDiv.appendChild(itemInfoSpan);
+//
+//         listItem.appendChild(imgDiv);
+//         listItem.appendChild(txtDiv);
+//
+//         cartItemsList.appendChild(listItem);
+//
+//         total += item.price * item.qty;
+//     });
+//
+//     totalPrice.textContent = `Total : \$${total.toFixed(2)}`;
+//     sub_total.textContent = `\$${total.toFixed(2)}`;
+// }
 
 // Function to remove an item from the cart
-const removeItem = (id) => {
-    cart = cart.filter(item => item.id !== id);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCart();
-};
+// const removeItem = (id) => {
+//     cart = cart.filter(item => item.id !== id);
+//     localStorage.setItem('cart', JSON.stringify(cart));
+//     updateCart();
+// };
 
 // Function to remove all items from the cart
-const removeAllItems = () => {
-    localStorage.clear();
-    updateCart();
-};
+// const removeAllItems = () => {
+//     localStorage.clear();
+//     updateCart();
+// };
 
-document.querySelector('.cart-length').setAttribute('data-notify', cart.length);
+document.querySelector('.cart-length').setAttribute('data-notify', data_notify);
 
 // Call the updateCart() function to initially display the cart on page load
-document.addEventListener('DOMContentLoaded', updateCart);
+// document.addEventListener('DOMContentLoaded', updateCart);
 
 const btnAddToCart = document.getElementById('addToCart');
 btnAddToCart.addEventListener('click', () => {
-    document.querySelector('.cart-length').setAttribute('data-notify', cart.length);
+    document.querySelector('.cart-length').setAttribute('data-notify', data_notify);
 })
 
 </script>

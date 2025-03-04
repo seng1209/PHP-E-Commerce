@@ -1,4 +1,7 @@
 <!-- Header -->
+<script>
+    let data_notify = "<?=count($_SESSION['cart'])?>";
+</script>
 <header class="header-v4">
     <!-- Header desktop -->
     <div class="container-menu-desktop">

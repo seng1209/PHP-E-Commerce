@@ -1,7 +1,8 @@
 <?php
 
 global $db;
-$image = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
+$image = $brand = $description = $file_name = $temp_name = $extension = $uuid = $name = $folder =
+$imageFileType = "";
     
     if(isset($_POST['submit'])){
         $brand = $_POST['brand'];

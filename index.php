@@ -1,10 +1,14 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    require "./admin/lib/Database.php";
-//    require "./admin/lib/Context.php";
     include "./components/head.php";
+    require "./admin/lib/Database.php";
     $db = new Database();
+    require "./admin/lib/CartContext.php";
     $pages = "home.php";
     $p = "home";
     $banner = true;
