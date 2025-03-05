@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/vendor/animsition/css" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/animsition/js" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bootstrap/css" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bootstrap/js" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jqueryui/external" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jqueryui/images" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/lightbox2/css" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/lightbox2/images" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/lightbox2/js" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/paypal/rest-api-sdk-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/slick/fonts" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

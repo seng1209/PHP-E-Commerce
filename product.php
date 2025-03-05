@@ -6,13 +6,19 @@
                     All Products
                 </button>
 
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".power-bank">
-                    Power Bank
-                </button>
+                <?php
+                global $db;
+                $categories = $db->read("categories");
+                $filter = "";
+                foreach ($categories as $category) {
+                    // Format the category for the data-filter attribute
+                    $filterValue = strtolower(str_replace(' ', '-', $category['category']));
 
-                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-                    Watches
-                </button>
+                    // Output the button
+                    echo '<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".' . $filterValue . '">'
+                        . htmlspecialchars($category['category']) . '</button>';
+                }
+                ?>
             </div>
 
             <div class="flex-w flex-c-m m-tb-10">
@@ -229,27 +235,15 @@
         <div class="row isotope-grid">
             <?php
                 global $db;
-                $products = $db->read("products");
+                $products = $db->read("categories AS c INNER JOIN products p ON c.category_id = p.category_id",
+                    "p.product_id, p.image, p.product_name, p.price, p.category_id, p.description, p.in_stock, c.category");
                 foreach ($products as $row) {
+                    $filterValue = strtolower(str_replace(' ', '-', $row['category']));
+                    echo '<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item '. $filterValue .'">';
             ?>
-            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                 <div class="block2">
                     <div class="block2-pic hov-img0">
                         <img src="./admin/uploads/images/products/<?=$row['image']?>" alt="<?=$row['image']?>">
-
-<!--                        <form action="index.php?product_id=--><?php //=$row['product_id']?><!--" method="post">-->
-<!--                            <input-->
-<!--                                    type="submit"-->
-<!--                                    name="view"-->
-<!--                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"-->
-<!--                                    value="Quick View"-->
-<!--                            />-->
-<!--                        </form>-->
-
-<!--                        <a href="index.php?product_id=--><?php //=$row['product_id']?><!--"-->
-<!--                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">-->
-<!--                            Quick View-->
-<!--                        </a>-->
                     </div>
 
                     <div class="block2-txt flex-w flex-t p-t-14">
@@ -274,8 +268,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <?php
+                    echo '</div>';
                 }
             ?>
         </div>

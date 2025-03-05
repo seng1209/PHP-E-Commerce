@@ -10,6 +10,23 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/bootstrap/js" />
+      <path value="$PROJECT_DIR$/vendor/bootstrap/css" />
+      <path value="$PROJECT_DIR$/vendor/animsition/js" />
+      <path value="$PROJECT_DIR$/vendor/animsition/css" />
+      <path value="$PROJECT_DIR$/vendor/paypal/rest-api-sdk-php" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/jqueryui/images" />
+      <path value="$PROJECT_DIR$/vendor/lightbox2/images" />
+      <path value="$PROJECT_DIR$/vendor/jqueryui/external" />
+      <path value="$PROJECT_DIR$/vendor/lightbox2/js" />
+      <path value="$PROJECT_DIR$/vendor/lightbox2/css" />
+      <path value="$PROJECT_DIR$/vendor/slick/fonts" />
+    </include_path>
+  </component>
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>

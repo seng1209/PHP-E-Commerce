@@ -1,41 +1,37 @@
 <?php
     global $db;
-    $image = $shipping_name = $shipping_datetime = $price = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
+    $shipping_id = $shipping_date = $shipment_method_id = $user_id = $city = $khan = $sangkat = $village =
+    $street_address = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
     if(isset($_POST['submit'])){
-        $shipping_name = $_POST['shipping_name'];
-        $shipping_price = $_POST['shipping_price'];
-        $file_name = $_FILES['image']['name'];
+        $shipment_method_id = $_POST['shipment_method_id'];
+        $user_id = $_POST['user_id'];
+        $city = $_POST['city'];
+        $khan = $_POST['khan'];
+        $sangkat = $_POST['sangkat'];
+        $village = $_POST['village'];
+        $street_address = $_POST['street_address'];
         
-        if(!Validator::notEmpty($shipping_name)){
-            die("Shipping Name is require!");
-        }
-        
-        if(!Validator::notEmpty($shipping_price)){
-            die("Price is require!");
+        if(!Validator::notEmpty($shipment_method_id)){
+            die("Shipment Method ID is require!");
         }
 
-        if(Validator::notEmpty($file_name)){
-            $temp_name = $_FILES['image']['tmp_name'];
-            $extension = explode(".", $file_name);
-            $uuid = gen_uuid();
-            $name = $uuid . "." . $extension[1];
-            $folder = "uploads/images/shipping/" . $name;
-            $imageFileType = strtolower(pathinfo($folder, PATHINFO_EXTENSION));
-        }else{
-            die("Image is require!");
-        }
-        
-        if(Validator::checkFileSize($_FILES['image']['size'])){
-            die("Image is large size 5MB!");
+        if (!Validator::notEmpty($user_id)){
+            die("User ID is require!");
         }
 
-        if(!Validator::fileFormats($imageFileType)){
-            die("Sorry, only JPG, JPEG, PNG & WEBP files are allowed.");
-        }
+        $data = [
+                'shipment_method_id' => $shipment_method_id,
+                'user_id' => $user_id,
+                'city' => $city,
+                'khan' => $khan,
+                'sangkat' => $sangkat,
+                'village' => $village,
+                'street_address' => $street_address,
+        ];
 
         try{
-            if(!$db->create($name, $shipping_name)){
+            if(!$db->create("shipping", $data)){
                 die("Failed to insert data.");
             }
             if (!move_uploaded_file($temp_name, $folder)) {
@@ -54,22 +50,48 @@
             <div class="card">
                 <div class="card-body">
                     <form action="index.php?p=shipping" method="post" enctype="multipart/form-data">
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">Images</label>
-                            <input class="form-control" type="file" name="image" id="formFile">
+                        <select class="form-select mb-3" name="shipment_method_id" aria-label="Default select example">
+                            <option selected disabled>Shipment Methods</option>
+                            <?php
+                            $shipment_methods = $db->read("shipment_methods");
+                            foreach($shipment_methods as $row){
+                                ?>
+                                <option value=" <?=$row['shipment_method_id']?>"><?=$row['name']?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <select class="form-select mb-3" name="user_id" aria-label="Default select example">
+                            <option selected disabled>Users</option>
+                            <?php
+                            $users = $db->read("users");
+                            foreach($users as $row){
+                                ?>
+                                <option value=" <?=$row['user_id']?>"><?=$row['username']?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <div class="mb-3">
+                            <label for="#" class="form-label">City</label>
+                            <input type="text" name="city" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label for="#" class="form-label">Shipping Name</label>
-                            <input type="text" name="shipping_name" class="form-control" />
+                            <label for="#" class="form-label">Khan</label>
+                            <input type="text" name="khan" class="form-control" />
                         </div>
                         <div class="mb-3">
-                            <label for="#" class="form-label">Shipping Price</label>
-                            <input type="text" name="shipping_price" class="form-control" />
+                            <label for="#" class="form-label">Sangkat</label>
+                            <input type="text" name="sangkat" class="form-control" />
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="#" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows=" 3"></textarea>
-                        </div> -->
+                        <div class="mb-3">
+                            <label for="#" class="form-label">Village</label>
+                            <input type="text" name="village" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="#" class="form-label">Street Address</label>
+                            <input type="text" name="street address" class="form-control" />
+                        </div>
                         <button type="submit" name="submit" class="btn btn-primary">
                             Submit
                         </button>

@@ -16,7 +16,7 @@
     <tbody>
         <?php
             global $db;
-            $products = $db->read("products");
+            $products = $db->read("categories AS c INNER JOIN products p ON c.category_id = p.category_id INNER JOIN brands b ON p.brand_id = b.brand_id", "p.product_id, p.image, p.product_name, p.price, p.category_id, p.brand_id, p.description, p.in_stock, c.category, b.brand");
             foreach($products as $row){
         ?>
         <tr>
@@ -25,8 +25,8 @@
             </td>
             <td><?=$row['product_name']?></td>
             <td><?=$row['price']?></td>
-            <td><?=$row['category_id']?></td>
-            <td><?=$row['brand_id']?></td>
+            <td><?=$row['category']?></td>
+            <td><?=$row['brand']?></td>
             <td><?=$row['description']?></td>
             <td><?=$row['in_stock']?></td>
             <td style="text-align: center;">

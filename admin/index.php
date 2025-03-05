@@ -16,6 +16,10 @@
                 $pages = "dashboard.php";
                 break;
             }
+            case "slideshow": {
+                $pages = "slideshow.php";
+                break;
+            }
             case "category": {
                 $pages = "category.php";
                 break;

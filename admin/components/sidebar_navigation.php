@@ -13,6 +13,14 @@
             </a>
         </li>
         <li class="sidebar-item">
+            <a class="sidebar-link" href="./index.php?p=slideshow" aria-expanded="false">
+                <span>
+                    <i class="ti ti-clipboard"></i>
+                </span>
+                <span class="hide-menu">Slide Show</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
             <a class="sidebar-link" href="./index.php?p=brand" aria-expanded="false">
                 <span>
                     <i class="ti ti-clipboard"></i>

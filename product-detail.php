@@ -13,13 +13,6 @@ if($row){
 }
 
 ?>
-<script>
-    //const productId = "<?php //=$_GET['id']?>//";
-    //const image = "<?php //=$image?>// ";
-    //const productName = "<?php //=$product_name?>//";
-    //const price = "<?php //=$price?>//";
-    //const qty = 1;
-</script>
 <!-- Product Detail -->
 <section class="sec-product-detail bg0 p-t-65 p-b-60">
     <div class="container">
