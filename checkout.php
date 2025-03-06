@@ -1,38 +1,60 @@
 <?php
 global $db;
 
+$sub_total = $total = $shipment_price = 0;
+
+$shipping_data = [];
+
+$payment_data = [];
+
 if (isset($_POST['pay'])) {
+    // shipping
     $city = $_POST['city'];
-    $khan = $_POST['khan'];
-    $snagkat = $_POST['sangkat'];
-    $village = $_POST['village'];
     $street_address = $_POST['street_address'];
     $shipment_method_id = $_POST['shipment'];
+
+    // payment
+    $payment_method_id = $_POST['payment'];
+
+    // cost
+    $row = $db->read("shipment_methods", "*", "shipment_method_id = '$shipment_method_id'");
+    if ($row)
+        $shipment_price = $row['price'];
+    $sub_total = $_POST['sub_total'];
+    $total = $sub_total + $shipment_price;
 
     $shipping_data = [
         'shipment_method_id' => $shipment_method_id,
         'user_id' => 3,
         'city' => $city,
-        'khan' => $khan,
-        'snagkat' => $snagkat,
-        'village' => $village,
         'street_address' => $street_address,
     ];
 
-    print_r($shipping_data);
-
-    try {
-//        if (!$db->create("shipping", $shipping_data))
-//            die("Create shipping failed");
-    }catch (Exception $e){
-        echo $e->getMessage();
-    }
+    $payment_data = [
+            'payment_method_id' => $payment_method_id,
+            'amount' => $total,
+    ];
 }
 
 ?>
 
 <div class="container-fluid">
-                        <div id="paypal-button-container"></div>
+    <div style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height of the viewport */
+            margin: 0;
+            font-family: Arial, sans-serif;
+            ">
+        <?php
+        echo '<p>Use one of the payment buttons or the credit card form below for your payment of $'.$total.'.</p>';
+        ?>
+        <span style="text-align: center;">
+            <div id="paypal-button-container"></div>
+        </span>
+    </div>
 </div>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AQfAeIbwBEwlhXqIbD8EjsaNnn8h53yNV-pz0IG707-iD42l8rjUET8bTPrBWHGtDhd99Q8ZRSVFRhwG&components=buttons&currency=USD"></script>
@@ -44,7 +66,7 @@ if (isset($_POST['pay'])) {
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: "'.$sub_total.'" // Amount to be charged
+                            value: "<?=$total?>" // Amount to be charged
                         }
                     }]
                 });
@@ -52,8 +74,18 @@ if (isset($_POST['pay'])) {
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                     alert("Transaction completed by " + details.payer.name.given_name);
+                    <?php
                     $_SESSION['cart'] = [];
-                    window.location.reload();
+                    try {
+                        if (!$db->create("shipping", $shipping_data))
+                            die("Create shipping failed");
+                        if (!$db->create("payments", $payment_data))
+                            die("Create payment failed");
+                    }catch (Exception $e){
+                        echo $e->getMessage();
+                    }
+                    ?>
+                    window.location.href="index.php?p=home";
                 });
             },
         }).render("#paypal-button-container"); // Display the PayPal button

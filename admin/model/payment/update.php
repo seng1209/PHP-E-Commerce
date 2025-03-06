@@ -9,16 +9,37 @@ $id = $_GET['id'];
 $row = $db->read("payments", "*", "payment_id = '$id'");
 
 if ($row){
-    $payment_date = $row['payment_date'];
     $payment_method_id = $row['payment_method_id'];
-    $payment_method = $row['payment_method'];
     $amount = $row['amount'];
 }
 
 $row1 = $db->read("payment_methods", "*", "payment_method_id = '$payment_method_id'");
 
 if ($row1){
-    $payment_method = $row1['payment_method'];
+    $payment_method = $row1['name'];
+}
+
+if (isset($_POST['modify'])){
+    $payment_method_id = $_POST['payment_method_id'];
+    $amount = $_POST['amount'];
+
+    if (!Validator::notEmpty($payment_method_id))
+        die("Payment Method is required");
+
+    if (!Validator::notEmpty($amount))
+        die("Amount is required");
+
+    $data = [
+            'payment_method_id' => $payment_method_id,
+            'amount' => $amount
+    ];
+
+    try {
+        if (!$db->update("payments", $data, "payment_id='$id'"))
+            die("Payment Method update failed");
+    }catch (Exception $e){
+        echo $e->getMessage();
+    }
 }
 
 ?>
@@ -31,7 +52,7 @@ if ($row1){
             <div class="card">
                 <div class="card-body">
                     <form action="index.php?p=payment&id=<?=$id?>" method="post">
-                        <select class="form-select mb-3" name="shipment_method_id" aria-label="Default select example">
+                        <select class="form-select mb-3" name="payment_method_id" aria-label="Default select example">
                             <option selected disabled value="<?=$payment_method_id?>"><?=$payment_method?></option>
                             <?php
                             $payment_methods = $db->read("payment_methods");
@@ -44,11 +65,12 @@ if ($row1){
                         </select>
                         <div class="mb-3">
                             <label for="#" class="form-label">Amount</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="text" name="amount" value="<?=$amount?>" class="form-control" />
                         </div>
-                        <button type="submit" name="submit" class="btn btn-primary">
-                            Submit
+                        <button type="submit" name="modify" class="btn btn-primary">
+                            Modify
                         </button>
+                        <a href="index.php?p=payment" class="btn btn-primary m-1">Create new Payment</a>
                     </form>
                 </div>
             </div>

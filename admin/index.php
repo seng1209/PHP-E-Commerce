@@ -52,6 +52,14 @@
                 $pages = "payment.php";
                 break;
             }
+            case "order": {
+                $pages = "order.php";
+                break;
+            }
+            case "order-product": {
+                $pages = "order_product.php";
+                break;
+            }
         }
     }
 ?>

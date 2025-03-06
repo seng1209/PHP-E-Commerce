@@ -2,7 +2,6 @@
 global $db;
 $shipment_method_id = $user_id = $city = $khan = $snagkat = $village = $street_address = "";
 $payment_method_id = $amount = "";
-$sub_total = $total_price = $shipping_price = 0;
 
 $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Kandal", "Sihanoukville", "Oddar Meanchey", "Pursat", "Kampong Thom", "Kampong Speu", "Svay Rieng", "Takéo", "Kampong Chhnang", "Kampong Cham", "Prey Veng", "Tboung Khmum", "Kampot", "Ratanakiri", "Koh Kong", "Preah Vihear", "Mondulkiri", "Kep");
 
@@ -82,7 +81,6 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
                                 }
                             }
                             ?>
-
                             </tbody>
                         </table>
                     </div>
@@ -123,7 +121,7 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
                                 <span class="stext-112 cl8"> Calculate Shipping </span>
 
                                 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                    <select class="js-select2" name="time">
+                                    <select class="js-select2" name="city">
                                         <option>Select a country...</option>
                                         <?php
                                             foreach ($cities as $city) {
@@ -134,42 +132,6 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
                                         ?>
                                     </select>
                                     <div class="dropDownSelect2"></div>
-                                </div>
-
-                                <div class="bor8 bg0 m-b-12">
-                                    <input
-                                            class="stext-111 cl8 plh3 size-111 p-lr-15"
-                                            type="text"
-                                            name="city"
-                                            placeholder="City / Province"
-                                    />
-                                </div>
-
-                                <div class="bor8 bg0 m-b-22">
-                                    <input
-                                            class="stext-111 cl8 plh3 size-111 p-lr-15"
-                                            type="text"
-                                            name="khan"
-                                            placeholder="Khan"
-                                    />
-                                </div>
-
-                                <div class="bor8 bg0 m-b-22">
-                                    <input
-                                            class="stext-111 cl8 plh3 size-111 p-lr-15"
-                                            type="text"
-                                            name="sangkat"
-                                            placeholder="Sangkat"
-                                    />
-                                </div>
-
-                                <div class="bor8 bg0 m-b-22">
-                                    <input
-                                            class="stext-111 cl8 plh3 size-111 p-lr-15"
-                                            type="text"
-                                            name="village"
-                                            placeholder="Village"
-                                    />
                                 </div>
 
                                 <div class="bor8 bg0 m-b-22">
@@ -188,7 +150,7 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
                                         $shipment_methods = $db->read("shipment_methods");
                                         foreach ($shipment_methods as $shipment_method) {
                                             ?>
-                                            <option value="<?=$shipment_method['shipment_method_id']?>"><?=$shipment_method['name']?></option>
+                                            <option value="<?=$shipment_method['shipment_method_id']?>"><?=$shipment_method['name']?> - <?=$shipment_method['price']?></option>
                                             <?php
                                         }
                                         ?>
@@ -199,16 +161,35 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
                         </div>
                     </div>
 
-<!--                    <div class="flex-w flex-t bor12 p-b-13">-->
-<!--                        <div class="size-208">-->
-<!--                            <span class="stext-110 cl2"> Total: $--><?php //= number_format($total_price, 2)?><!-- </span>-->
-<!--                        </div>-->
-<!---->
-<!--                        <div class="size-209">-->
-<!--                            <span class="mtext-110 cl2 sub-total"> </span>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                        <div class="size-208 w-full-ssm">
+                            <span class="stext-110 cl2"> Payment: </span>
+                        </div>
 
+                        <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
+                            <div class="p-t-15">
+                                <span class="stext-112 cl8"> Payment Methods </span>
+
+                                <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+                                    <select class="js-select2" name="payment" id="shipment_method">
+                                        <option disabled selected>Select a Payment Method</option>
+                                        <?php
+                                        $payment_methods = $db->read("payment_methods");
+                                        foreach ($payment_methods as $payment_method) {
+                                            ?>
+                                            <option value="<?=$payment_method['payment_method_id']?>"><?=$payment_method['name']?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/><br/>
+                    <input type="hidden" name="sub_total" value="<?=$sub_total?>" />
 
                     <button type="submit" name="pay"
                             class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
@@ -220,14 +201,3 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
         </div>
     </div>
 </div>
-<script>
-    //let subTotal = "<?php //=number_format($sub_total, 2)?>//";
-    //let total = 0;
-    //document.getElementById("shipment_method").onchange = function (){
-    //    // Get the selected value
-    //    const selectedValue = this.value;
-    //    const parts = selectedValue.split("-");
-    //    total = (parseFloat(parts[1]) + parseFloat(subTotal)).toFixed(2);
-    //
-    //};
-</script>

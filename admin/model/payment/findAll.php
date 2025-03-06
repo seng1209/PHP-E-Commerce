@@ -21,7 +21,10 @@
         <td><?=$payment['payment_method_id']?></td>
         <td><?=$payment['amount']?></td>
         <td><?=$payment['status']?></td>
-        <td>Action</td>
+        <td>
+            <a href="index.php?p=payment&id=<?=$payment['payment_id']?>" class="btn btn-warning m-1">Update</a>
+            <a href="./model/payment/delete.php?id=<?=$payment['payment_id']?>" class="btn btn-danger m-1">Delete</a>
+        </td>
     </tr>
     <?php
         }

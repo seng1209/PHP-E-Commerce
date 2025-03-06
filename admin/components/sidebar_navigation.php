@@ -84,6 +84,22 @@
                 <span class="hide-menu">Payment</span>
             </a>
         </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="./index.php?p=order" aria-expanded="false">
+                <span>
+                    <i class="ti ti-clipboard"></i>
+                </span>
+                <span class="hide-menu">Order</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="./index.php?p=order-product" aria-expanded="false">
+                <span>
+                    <i class="ti ti-clipboard"></i>
+                </span>
+                <span class="hide-menu">Order Detail</span>
+            </a>
+        </li>
         <li class="nav-small-cap">
             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
             <span class="hide-menu">AUTH</span>

@@ -8,7 +8,24 @@ if (isset($_POST['submit'])) {
     $payment_method_id = $_POST['payment_method_id'];
     $amount = $_POST['amount'];
 
-    echo "<script>alert('$payment_method_id $amount')</script>";
+    if (!Validator::notEmpty($payment_method_id))
+        die("Payment Method is required");
+
+    if (!Validator::notEmpty($amount))
+        die("Amount is required");
+
+    $data = [
+        'payment_method_id' => $payment_method_id,
+        'amount' => $amount
+    ];
+
+    try {
+        if (!$db->create("payments", $data))
+            die("Failed to create payment");
+    }catch (Exception $e){
+        echo $e->getMessage();
+    }
+
 }
 
 ?>
@@ -20,7 +37,7 @@ if (isset($_POST['submit'])) {
             <div class="card">
                 <div class="card-body">
                     <form action="index.php?p=payment" method="post">
-                        <select class="form-select mb-3" name="shipment_method_id" aria-label="Default select example">
+                        <select class="form-select mb-3" name="payment_method_id" aria-label="Default select example">
                             <option selected disabled>Payment Methods</option>
                             <?php
                             $payment_methods = $db->read("payment_methods");

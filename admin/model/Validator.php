@@ -2,7 +2,7 @@
     class Validator {
         public static function notEmpty($text){
             try{
-                if($text != "" || $text != null)
+                if($text != "")
                     return true;
             }catch(Exception $ex){
                 echo $ex;

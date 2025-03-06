@@ -1,6 +1,6 @@
 <?php
 global $db;
-$shipping_id = $shipping_date = $shipment_method_id = $shipment_method = $user_id = $city = $khan = $sangkat = $village =
+$shipping_id = $shipping_date = $shipment_method_id = $shipment_method = $user_id = $city =
 $street_address = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
 $id = $_GET['id'];
@@ -31,9 +31,6 @@ if(isset($_POST['modify'])){
     $shipment_method_id = $_POST['shipment_method_id'];
     $user_id = $_POST['user_id'];
     $city = $_POST['city'];
-    $khan = $_POST['khan'];
-    $sangkat = $_POST['sangkat'];
-    $village = $_POST['village'];
     $street_address = $_POST['street_address'];
 
     if(!Validator::notEmpty($shipment_method_id)){
@@ -48,9 +45,6 @@ if(isset($_POST['modify'])){
         'shipment_method_id' => $shipment_method_id,
         'user_id' => $user_id,
         'city' => $city,
-        'khan' => $khan,
-        'sangkat' => $sangkat,
-        'village' => $village,
         'street_address' => $street_address,
     ];
 
@@ -96,18 +90,6 @@ if(isset($_POST['modify'])){
                         <div class="mb-3">
                             <label for="#" class="form-label">City</label>
                             <input type="text" name="city" value="<?=$city?>" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="#" class="form-label">Khan</label>
-                            <input type="text" name="khan" value="<?=$khan?>" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="#" class="form-label">Sangkat</label>
-                            <input type="text" name="sangkat" value="<?=$sangkat?>" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="#" class="form-label">Village</label>
-                            <input type="text" name="village" value="<?=$village?>" class="form-control" />
                         </div>
                         <div class="mb-3">
                             <label for="#" class="form-label">Street Address</label>

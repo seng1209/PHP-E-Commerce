@@ -1,5 +1,6 @@
 <?php
 session_start();
+//$sub_total = $total_price = $shipping_price = 0;
 ?>
 
 <!DOCTYPE html>
