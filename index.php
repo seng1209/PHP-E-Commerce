@@ -98,6 +98,17 @@ session_start();
                 $slider = false;
                 break;
             }
+            case "checkout": {
+                $pages = "checkout.php";
+                $banner = false;
+                $breadcrumb = false;
+                $cart = false;
+                $footer = false;
+                $header = false;
+                $header2 = true;
+                $slider = false;
+                break;
+            }
         }
     }
 ?>

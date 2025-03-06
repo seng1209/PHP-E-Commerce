@@ -99,7 +99,7 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
                 </div>
             </div>
 
-            <form method="post" class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+            <form action="index.php?p=checkout" method="post" class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
                 <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
                     <h4 class="mtext-109 cl2 p-b-30">Cart Totals</h4>
 
@@ -209,11 +209,12 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
 <!--                        </div>-->
 <!--                    </div>-->
 
-                    
 
-                    <div id="paypal-button-container">
-                        <input name="pay" type="submit" value="Payment" class="m-1" >
-                    </div>
+                    <button type="submit" name="pay"
+                            class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                    >
+                        Proceed to Checkout
+                    </button>
                 </div>
             </form>
         </div>
@@ -229,35 +230,4 @@ $cities = array("Phnom Penh", "Siem Reap", "Battambang", "Banteay Meanchey", "Ka
     //    total = (parseFloat(parts[1]) + parseFloat(subTotal)).toFixed(2);
     //
     //};
-</script>
-<script src="https://www.paypal.com/sdk/js?client-id=AQfAeIbwBEwlhXqIbD8EjsaNnn8h53yNV-pz0IG707-iD42l8rjUET8bTPrBWHGtDhd99Q8ZRSVFRhwG&components=buttons&currency=USD"></script>
-<script>
-    // Ensure the PayPal SDK is loaded before using it
-    if (typeof paypal !== 'undefined') {
-        paypal.Buttons({
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '<?=$sub_total?>' // Amount to be charged
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    alert('Transaction completed by ' + details.payer.name.given_name);
-
-                    <?php
-
-                    ?>
-
-                    localStorage.clear();
-                    window.location.reload();
-                });
-            },
-        }).render('#paypal-button-container'); // Display the PayPal button
-    } else {
-        console.error('PayPal SDK not loaded.');
-    }
 </script>

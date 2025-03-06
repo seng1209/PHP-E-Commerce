@@ -34,9 +34,6 @@
             if(!$db->create("shipping", $data)){
                 die("Failed to insert data.");
             }
-            if (!move_uploaded_file($temp_name, $folder)) {
-                die("Failed to upload image.");
-            }
         }catch(Exception $ex){
             echo $ex;
         }
@@ -64,7 +61,7 @@
                         <select class="form-select mb-3" name="user_id" aria-label="Default select example">
                             <option selected disabled>Users</option>
                             <?php
-                            $users = $db->read("users");
+                            $users = $db->readBy("users", "*", "role = 'customer'");
                             foreach($users as $row){
                                 ?>
                                 <option value=" <?=$row['user_id']?>"><?=$row['username']?></option>
