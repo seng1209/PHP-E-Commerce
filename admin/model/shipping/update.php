@@ -1,6 +1,6 @@
 <?php
 global $db;
-$shipping_id = $shipping_date = $shipment_method_id = $shipment_method = $user_id = $city =
+$shipping_id = $shipping_date = $shipment_method_id = $shipment_method = $order_id = $user_id = $city =
 $street_address = $file_name = $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
 $id = $_GET['id'];
@@ -9,6 +9,7 @@ $row = $db->read("shipping", "*", "shipping_id = '$id'");
 if ($row){
     $shipping_date = $row["shipping_date"];
     $shipment_method_id = $row["shipment_method_id"];
+    $order_id = $row["order_id"];
     $user_id = $row["user_id"];
     $city = $row["city"];
     $khan = $row["khan"];
@@ -72,6 +73,17 @@ if(isset($_POST['modify'])){
                             foreach($shipment_methods as $row){
                                 ?>
                                 <option value=" <?=$row['shipment_method_id']?>"><?=$row['name']?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <select class="form-select mb-3" name="order_id" aria-label="Default select example">
+                            <option selected disabled value="<?=$order_id?>"><?=$order_id?></option>
+                            <?php
+                            $users = $db->read("orders");
+                            foreach($users as $row){
+                                ?>
+                                <option value=" <?=$row['order_id']?>"><?=$row['order_id']?></option>
                                 <?php
                             }
                             ?>

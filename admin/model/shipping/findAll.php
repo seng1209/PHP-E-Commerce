@@ -4,6 +4,7 @@
             <th scope="col">ID</th>
             <th scope="col">Shipping Date</th>
             <th scope="col">Shipment Method</th>
+            <th scope="col">Order ID</th>
             <th scope="col">User</th>
             <th scope="col">City</th>
             <th scope="col">Street Address</th>
@@ -20,6 +21,7 @@
             <th scope="row"><?=$row['shipping_id']?></th>
             <td><?=$row['shipping_date']?></td>
             <td><?=$row['shipment_method_id']?></td>
+            <td><?=$row['order_id']?></td>
             <td><?=$row['user_id']?></td>
             <td><?=$row['city']?></td>
             <td><?=$row['street_address']?></td>

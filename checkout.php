@@ -6,6 +6,8 @@ $sub_total = $total = $shipment_price = 0;
 //$user_id = $_SESSION['user_id'];
 $user_id = 3;
 
+$order_id = 0;
+
 $shipping_data = [];
 
 $payment_data = [];
@@ -30,21 +32,32 @@ if (isset($_POST['pay'])) {
     $sub_total = $_POST['sub_total'];
     $total = $sub_total + $shipment_price;
 
+    $order_data = [
+        "user_id" => $user_id,
+        "total_amount" => 0
+    ];
+
+    try {
+        if (!$db->create("orders",$order_data))
+            die("Failed to create order");
+
+        $order_id = $db->last_id("orders", "order_id");
+    }catch (Exception $e){
+        echo $e->getMessage();
+    }
+
     $shipping_data = [
         'shipment_method_id' => $shipment_method_id,
+        'order_id' => $order_id,
         'user_id' => 3,
         'city' => $city,
         'street_address' => $street_address,
     ];
 
     $payment_data = [
-            'payment_method_id' => $payment_method_id,
-            'amount' => $total,
-    ];
-
-    $order_data = [
-        "user_id" => $user_id,
-        "total_amount" => 0
+        'payment_method_id' => $payment_method_id,
+        'order_id' => $order_id,
+        'amount' => $total,
     ];
 
 }
@@ -89,10 +102,7 @@ if (isset($_POST['pay'])) {
                     alert("Transaction completed by " + details.payer.name.given_name);
                     <?php
                     try {
-                        if (!$db->create("orders",$order_data))
-                            die("Failed to create order");
 
-                        $order_id = $db->last_id("orders", "order_id");
 
                         insert_order_product($db, $order_id);
 
@@ -115,9 +125,6 @@ if (isset($_POST['pay'])) {
 </script>
 
 <?php
-
-
-
 function insert_order_product($db, $order_id)
 {
     foreach ($_SESSION['cart'] as $key => $value) {
