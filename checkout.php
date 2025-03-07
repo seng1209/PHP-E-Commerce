@@ -3,9 +3,16 @@ global $db;
 
 $sub_total = $total = $shipment_price = 0;
 
+//$user_id = $_SESSION['user_id'];
+$user_id = 3;
+
 $shipping_data = [];
 
 $payment_data = [];
+
+$order_data = [];
+
+$order_product_data = [];
 
 if (isset($_POST['pay'])) {
     // shipping
@@ -34,6 +41,12 @@ if (isset($_POST['pay'])) {
             'payment_method_id' => $payment_method_id,
             'amount' => $total,
     ];
+
+    $order_data = [
+        "user_id" => $user_id,
+        "total_amount" => 0
+    ];
+
 }
 
 ?>
@@ -75,8 +88,14 @@ if (isset($_POST['pay'])) {
                 return actions.order.capture().then(function(details) {
                     alert("Transaction completed by " + details.payer.name.given_name);
                     <?php
-                    $_SESSION['cart'] = [];
                     try {
+                        if (!$db->create("orders",$order_data))
+                            die("Failed to create order");
+
+                        $order_id = $db->last_id("orders", "order_id");
+
+                        insert_order_product($db, $order_id);
+
                         if (!$db->create("shipping", $shipping_data))
                             die("Create shipping failed");
                         if (!$db->create("payments", $payment_data))
@@ -84,6 +103,7 @@ if (isset($_POST['pay'])) {
                     }catch (Exception $e){
                         echo $e->getMessage();
                     }
+                    $_SESSION['cart'] = [];
                     ?>
                     window.location.href="index.php?p=home";
                 });
@@ -93,3 +113,26 @@ if (isset($_POST['pay'])) {
         console.error("PayPal SDK not loaded.");
     }
 </script>
+
+<?php
+
+
+
+function insert_order_product($db, $order_id)
+{
+    foreach ($_SESSION['cart'] as $key => $value) {
+        $order_product_data = [
+            "order_id" => $order_id,
+            "product_id" => $value['product_id'],
+            "quantity" => $value['quantity'],
+            "amount" => $value['price'] * $value['quantity'],
+        ];
+        if (!$db->create("order_products", $order_product_data))
+            die("Failed to create order product");
+        $total_amount = $db->total_amount("order_products", "amount", "order_id = $order_id");
+        if (!$db->update("orders" , ["total_amount" => $total_amount], "order_id = $order_id"))
+            die("Failed to update total amount");
+    }
+
+}
+?>

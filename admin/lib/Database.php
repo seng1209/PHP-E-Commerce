@@ -130,5 +130,33 @@ class Database {
         return true;
     }
 
+    public function total_amount($tb_name, $col, $criteria = "")
+    {
+        $conn = self::getConnection();
+        if (empty($tb_name) || empty($col) || empty($criteria))
+            return false;
+        $sql = "SELECT SUM(" . $col . ") FROM " . $tb_name . " WHERE " . $criteria;
+        $result = $conn->query($sql);
+        if (!$result) {
+            return false;
+        }
+        $this->closeConnection();
+        return $result->fetchColumn();
+    }
+
+    public function last_id($tb_name, $col)
+    {
+        $conn = self::getConnection();
+        if (empty($tb_name) || empty($col))
+            return false;
+        $sql = "SELECT MAX(" . $col . ") FROM " . $tb_name;
+        $result = $conn->query($sql);
+        if (!$result) {
+            return false;
+        }
+        $this->closeConnection();
+        return $result->fetchColumn();
+    }
+
 }
 ?>

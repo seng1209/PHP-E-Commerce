@@ -2,11 +2,12 @@
 
 global $db;
 
-$payment_method_id = $amount = "";
+$payment_method_id = $order_id = $amount = "";
 
 if (isset($_POST['submit'])) {
     $payment_method_id = $_POST['payment_method_id'];
     $amount = $_POST['amount'];
+    $order_id = $_POST['order_id'];
 
     if (!Validator::notEmpty($payment_method_id))
         die("Payment Method is required");
@@ -14,9 +15,13 @@ if (isset($_POST['submit'])) {
     if (!Validator::notEmpty($amount))
         die("Amount is required");
 
+    if (!Validator::notEmpty($order_id))
+        die("Order is required");
+
     $data = [
         'payment_method_id' => $payment_method_id,
-        'amount' => $amount
+        'amount' => $amount,
+        'order_id' => $order_id
     ];
 
     try {
@@ -44,6 +49,17 @@ if (isset($_POST['submit'])) {
                             foreach($payment_methods as $row){
                                 ?>
                                 <option value=" <?=$row['payment_method_id']?>"><?=$row['name']?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <select class="form-select mb-3" name="order_id" aria-label="Default select example">
+                            <option selected disabled>Order</option>
+                            <?php
+                            $orders = $db->read("orders");
+                            foreach($orders as $row){
+                                ?>
+                                <option value=" <?=$row['order_id']?>"><?=$row['order_id']?> - <?=$row['total_amount']?></option>
                                 <?php
                             }
                             ?>

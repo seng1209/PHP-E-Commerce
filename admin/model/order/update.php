@@ -18,8 +18,11 @@ if ($row1){
     $username = $row1['username'];
 }
 
-if (isset($_POST['submit'])) {
-    $user_id = $_POST['user_id'];
+if (isset($_POST['modify'])) {
+    if (Validator::notEmpty(isset($_POST['user_id'])))
+        $user_id = $_POST['user_id'];
+    else
+        $user_id = $row['user_id'];
     $total_amount = $_POST['total_amount'];
 
     if (!Validator::notEmpty($total_amount))

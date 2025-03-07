@@ -2,7 +2,7 @@
 
 global $db;
 
-$payment_id = $payment_date = $payment_method_id = $payment_method = $amount = $status = "";
+$payment_id = $payment_date = $payment_method_id = $payment_method = $order_id = $amount = $status = "";
 
 $id = $_GET['id'];
 
@@ -10,6 +10,7 @@ $row = $db->read("payments", "*", "payment_id = '$id'");
 
 if ($row){
     $payment_method_id = $row['payment_method_id'];
+    $order_id = $row['order_id'];
     $amount = $row['amount'];
 }
 
@@ -20,7 +21,11 @@ if ($row1){
 }
 
 if (isset($_POST['modify'])){
-    $payment_method_id = $_POST['payment_method_id'];
+    if (Validator::notEmpty(isset($_POST['payment_method_id'])))
+        $payment_method_id = $_POST['payment_method_id'];
+    else
+        $payment_method_id = $row['payment_method_id'];
+    $order_id = $_POST['order_id'];
     $amount = $_POST['amount'];
 
     if (!Validator::notEmpty($payment_method_id))
@@ -29,8 +34,12 @@ if (isset($_POST['modify'])){
     if (!Validator::notEmpty($amount))
         die("Amount is required");
 
+    if (!Validator::notEmpty($order_id))
+        die("Order is required");
+
     $data = [
             'payment_method_id' => $payment_method_id,
+            'order_id' => $order_id,
             'amount' => $amount
     ];
 
@@ -59,6 +68,17 @@ if (isset($_POST['modify'])){
                             foreach($payment_methods as $row){
                                 ?>
                                 <option value=" <?=$row['payment_method_id']?>"><?=$row['name']?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <select class="form-select mb-3" name="order_id" aria-label="Default select example">
+                            <option selected disabled value="<?=$order_id?>"><?=$order_id?></option>
+                            <?php
+                            $orders = $db->read("orders");
+                            foreach($orders as $row){
+                                ?>
+                                <option value=" <?=$row['order_id']?>"><?=$row['order_id']?> - <?=$row['total_amount']?></option>
                                 <?php
                             }
                             ?>
