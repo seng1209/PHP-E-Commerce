@@ -51,8 +51,8 @@ if (isset($_POST["modify"])) {
             die("Failed to upload image.");
         }
 
-        if (file_exists($image))
-            unlink($image);
+        if (file_exists("uploads/images/payment_methods/" . $image))
+            unlink("uploads/images/payment_methods/" . $image);
     }else{
         $name = $image;
     }

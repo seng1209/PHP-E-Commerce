@@ -1,3 +1,12 @@
+<?php
+require "./model/uuid.php";
+require "./model/Validator.php";
+require "./lib/Database.php";
+$db = new Database();
+require "./lib/Auth.php";
+$auth = new Auth();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +16,9 @@
     $image = $username = $password = $email = $phone = $address = $role = $file_name =
     $temp_name = $extension = $uuid = $name = $folder = $imageFileType = "";
 
-    $userObj = new UserDB();
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST["submit"])) {
-            $image = $_FILES["image"]["name"];
+        if (isset($_POST["sign_in"])) {
+            $file_name = $_FILES["image"]["name"];
             $username = $_POST["username"];
             $password = $_POST["password"];
             $email = $_POST["email"];
@@ -19,13 +26,42 @@
             $address = $_POST["address"];
             $role = 'customer';
 
-            echo $image . "<br/>";
-            echo $username . "<br/>";
-            echo $password . "<br/>";
-            echo $email . "<br/>";
-            echo $phone . "<br/>";
-            echo $address . "<br/>";
-            echo $role . "<br/>";
+            if (!Validator::notEmpty($username)) {
+                die("Username is required");
+            }
+
+            if (!Validator::notEmpty($password)) {
+                die("Password is required");
+            }
+
+            if (!Validator::notEmpty($email)) {
+                die("Email is required");
+            }
+
+            if (!Validator::notEmpty($phone)) {
+                die("Phone is required");
+            }
+
+            if (!Validator::notEmpty($address)) {
+                die("Address is required");
+            }
+
+            if (Validator::notEmpty($file_name)){
+                $temp_name = $_FILES["image"]["tmp_name"];
+                $extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+                $name = gen_uuid() . "." . $extension;
+                $folder = "./uploads/images/users/" . $name;
+            }
+
+            try {
+                if ($auth->register($name, $username, $password, $email, $phone, $address))
+                    header("location: login.php");
+                if (!move_uploaded_file($temp_name, $folder))
+                    die("Image upload failed");
+            }catch (Exception $e) {
+                echo $e->getMessage();
+            }
+
         }
     }
 
@@ -47,7 +83,7 @@
                                     <img src="./assets/images/logos/dark-logo.svg" width="180" alt="" />
                                 </a>
                                 <p class="text-center">Your Social Campaigns</p>
-                                <form>
+                                <form action="register.php" method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Upload Image</label>
                                         <input class="form-control" type="file" name="image" id="formFile" require>
@@ -55,24 +91,23 @@
                                     <div style="display: flex">
                                         <div class="w-full p-1" style="width: 100%;">
                                             <div class="mb-3">
-                                                <label for="exampleInputtext1" class="form-label">Name</label>
-                                                <input type="text" class="form-control" id="exampleInputtext1"
+                                                <label for="exampleInputtext1" class="form-label">Username</label>
+                                                <input type="text" name="username" class="form-control" id="exampleInputtext1"
                                                        aria-describedby="textHelp" />
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp" />
+                                                <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" />
                                             </div>
                                         </div>
                                         <div class="w-full p-1" style="width: 100%;">
                                             <div class="mb-3">
                                                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1" />
+                                                <input type="password" class="form-control" name="password" id="exampleInputPassword1" />
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputPassword1" class="form-label">Phone</label>
-                                                <input type="text" class="form-control" id="exampleInputPassword1" />
+                                                <input type="text" class="form-control" name="phone" id="exampleInputPassword1" />
                                             </div>
                                         </div>
                                     </div>
@@ -80,9 +115,7 @@
                                         <label for="#" class="form-label">Address</label>
                                         <textarea class="form-control" name="address" rows=" 3"></textarea>
                                     </div>
-                                    <a href="./index.php?p=dashboard"
-                                        class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign
-                                        Up</a>
+                                    <input type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" name="sign_in" value="Sign Up" />
                                     <div class="d-flex align-items-center justify-content-center">
                                         <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
                                         <a class="text-primary fw-bold ms-2" href="./login.php">Sign

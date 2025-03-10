@@ -36,8 +36,8 @@ $id = $_GET['id'];
                 die("Failed to upload image.");
             }
 
-            if (file_exists($image))
-                unlink($image);
+            if (file_exists("uploads/images/categories/" . $image))
+                unlink("uploads/images/categories/" . $image);
         }else{
             $name = $image;
         }

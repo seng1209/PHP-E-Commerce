@@ -57,6 +57,9 @@ if (isset($_POST['modify'])){
         if (!move_uploaded_file($temp_name, $folder))
             die("Failed to upload image.");
 
+        if (file_exists("uploads/images/slider/" . $image))
+            unlink("uploads/images/slider/" . $image);
+
     }else{
         $name = $image;
     }

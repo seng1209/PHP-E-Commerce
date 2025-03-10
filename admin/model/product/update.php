@@ -37,7 +37,7 @@ $id = $_GET['id'];
             $extension = explode(".", $file_name);
             $uuid = gen_uuid();
             $name = $uuid . "." . $extension[1];
-            $folder = "uploads/images/categories/" . $name;
+            $folder = "uploads/images/products/" . $name;
             $imageFileType = strtolower(pathinfo($folder, PATHINFO_EXTENSION));
             
             if(Validator::checkFileSize($_FILES['image']['size'])){ 
@@ -52,8 +52,8 @@ $id = $_GET['id'];
                 die("Failed to upload image.");
             }
 
-            if (file_exists($image)) {
-                unlink($image);
+            if (file_exists("uploads/images/products/" . $image)) {
+                unlink("uploads/images/products/" . $image);
             }
         }else{
             $name = $image;

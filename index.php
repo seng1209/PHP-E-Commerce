@@ -1,15 +1,18 @@
 <?php
+
 session_start();
-//$sub_total = $total_price = $shipping_price = 0;
+require "./admin/lib/Auth.php";
+require "./admin/lib/Database.php";
+$db = new Database();
+require "./admin/lib/CartContext.php";
+$auth = new Auth();
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <?php
     include "./components/head.php";
-    require "./admin/lib/Database.php";
-    $db = new Database();
-    require "./admin/lib/CartContext.php";
     $pages = "home.php";
     $p = "home";
     $banner = true;

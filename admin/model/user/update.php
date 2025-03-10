@@ -19,7 +19,7 @@ if ($row){
 
 if (isset($_POST["modify"])) {
     $username = $_POST["username"];
-    $password = $_POST["passwd"];
+//    $password = $_POST["passwd"];
     $email = $_POST["email"];
     $phone = $_POST["phone"];
     $address = $_POST["address"];
@@ -30,9 +30,9 @@ if (isset($_POST["modify"])) {
         die("Username is required");
     }
 
-    if (!Validator::notEmpty($password)) {
-        die("Password is required");
-    }
+//    if (!Validator::notEmpty($password)) {
+//        die("Password is required");
+//    }
 
     if (!Validator::notEmpty($email)) {
         die("Email is required");
@@ -70,15 +70,15 @@ if (isset($_POST["modify"])) {
             die("Fail to move uploaded file");
         }
 
-        if (file_exists($image))
-            unlink($image);
+        if (file_exists("uploads/images/users/" . $image))
+            unlink("uploads/images/users/" . $image);
     }else
         $name = $image;
 
     $data = [
         'image' => $name,
         'username' => $username,
-        'password' => $password,
+//        'password' => $password,
         'email' => $email,
         'phone' => $phone,
         'address' => $address,
@@ -112,10 +112,10 @@ if (isset($_POST["modify"])) {
                             <label for="#" class="form-label">Username</label>
                             <input type="text" name="username" value="<?=$username?>" class="form-control" />
                         </div>
-                        <div class="mb-3">
-                            <label for="#" class="form-label">Password</label>
-                            <input type="password" name="passwd" value="<?=$password?>" class="form-control" />
-                        </div>
+<!--                        <div class="mb-3">-->
+<!--                            <label for="#" class="form-label">Password</label>-->
+<!--                            <input type="password" name="passwd" value="--><?php //=$password?><!--" class="form-control" />-->
+<!--                        </div>-->
                         <div class="mb-3">
                             <label for="#" class="form-label">Email</label>
                             <input type="email" name="email" value="<?=$email?>" class="form-control" />

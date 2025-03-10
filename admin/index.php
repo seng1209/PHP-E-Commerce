@@ -1,12 +1,26 @@
+<?php
+
+session_start();
+require "./lib/Auth.php";
+require "./model/uuid.php";
+require "./model/Validator.php";
+require "./lib/Database.php";
+$db = new Database();
+$auth = new Auth();
+
+//$auth->duration();
+
+if ($_SESSION['is_log_in'] != "login" || $_SESSION['role'] != 'admin')
+    header('Location: ./login.php');
+
+if ($_SESSION['role'] == 'admin' && $_SESSION['is_log_in'] == "login"){
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <?php
-    require "./model/uuid.php";
-    require "./model/Validator.php";
     include "./components/head.php";
-    require "./lib/Database.php";
-    $db = new Database();
     $pages = "dashboard.php";
     $p = "dashboard";
     if(isset($_GET['p'])){
@@ -112,3 +126,7 @@
 </body>
 
 </html>
+
+<?php
+}
+?>
